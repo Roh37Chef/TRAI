@@ -1,0 +1,27 @@
+# 공통
+.DS_Store
+*.log
+
+# Node (React - frontend-react)
+frontend-react/node_modules
+frontend-react/build
+frontend-react/.env.local
+frontend-react/yarn-error.log
+
+# Java (Spring Boot - backend-spring)
+backend-spring/build/
+backend-spring/.idea/
+backend-spring/*.iml
+backend-spring/out/
+backend-spring/.gradle
+backend-spring/.project
+backend-spring/.settings
+backend-spring/.classpath
+
+# Python (FastAPI - ai-python)
+ai-python/__pycache__/
+ai-python/venv/
+ai-python/.venv/
+ai-python/.env
+ai-python/*.pyc
+ai-python/.pytest_cache
