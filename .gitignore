@@ -2,26 +2,28 @@
 .DS_Store
 *.log
 
-# Node (React - frontend-react)
-frontend-react/node_modules
-frontend-react/build
-frontend-react/.env.local
-frontend-react/yarn-error.log
+# Node (React - frontend)
+frontend/node_modules
+frontend/build
+frontend/.env.local
+frontend/yarn-error.log
 
-# Java (Spring Boot - backend-spring)
-backend-spring/build/
-backend-spring/.idea/
-backend-spring/*.iml
-backend-spring/out/
-backend-spring/.gradle
-backend-spring/.project
-backend-spring/.settings
-backend-spring/.classpath
+# Java (Spring Boot - backend)
+backend/build/
+backend/.idea/
+backend/*.iml
+backend/out/
+backend/.gradle
+backend/.project
+backend/.settings
+backend/.classpath
 
-# Python (FastAPI - ai-python)
-ai-python/__pycache__/
-ai-python/venv/
-ai-python/.venv/
-ai-python/.env
-ai-python/*.pyc
-ai-python/.pytest_cache
+# Python (FastAPI - ai)
+ai/__pycache__/
+ai/venv/
+ai/.venv/
+ai/.env
+ai/*.pyc
+ai/.pytest_cache
+ai/*.db
+ai/chroma_db_persistence/
