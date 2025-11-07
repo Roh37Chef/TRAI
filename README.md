@@ -39,3 +39,18 @@
 cd frontend
 npm install
 npm run dev
+```
+
+### 2. 백엔드 (Spring Boot)
+```bash
+1. IntelliJ 또는 Eclipse에서 backend 폴더를 프로젝트로 열기
+2. build.gradle (또는 pom.xml) 의존성을 빌드
+3. application.properties (또는 .yml) 파일에 MySQL, 네이버 API 키 등 설정을 확인
+3. 메인 애플리케이션을 실행
+```
+
+### 3. AI/RAG 서버 (Python)
+```bash
+cd ai
+pip install -r requirements.txt
+uvicorn main:app --reload
