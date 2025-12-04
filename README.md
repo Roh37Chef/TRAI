@@ -54,6 +54,7 @@ npm run dev
 cd ai
 pip install -r requirements.txt
 uvicorn main:app --reload
+```
 
 # TRAI 저장소 최상위 폴더에서 실행
 git config --local commit.template .gitmessage.txt
