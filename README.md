@@ -67,7 +67,7 @@ git config --local commit.template .gitmessage.txt
 2. 브랜치 생성: git checkout -b 브랜치명(ex: backend/feature/auth-register)
 3. 코드 수정
 4. 변경 파일 추가: git add 파일명(ex: backend/	frontend/	ai/)
-5. 커밋: git commit
+5. 커밋: git commit (e 키 눌러서 수정 후 esc -> :wq 입력하여 저장)
 6. 원격 푸시: git push origin 생성한 브랜치명(ex: backend/feature/auth-register)
 7. PR 요청: GitHub 웹사이트에서 해당 브랜치명 → main으로 Pull Request를 요청합니다.
 ```
