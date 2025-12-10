@@ -10,7 +10,7 @@ const backgroundStyle = {
     backgroundImage: `url(${MainBackgroundImage})`, 
     backgroundSize: 'cover', 
     backgroundPosition: 'center',
-    height: '100vh', 
+    height: '100vh', // 화면 높이를 꽉 채움
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -66,7 +66,7 @@ function LoginSuccessPage() {
             alert("URL을 입력해 주세요.");
             return;
         }
-        navigate('/option1', { state: { url } }); 
+        navigate('/option1', { state: { url } }); // /option1으로 이동
     };
 
     return (
