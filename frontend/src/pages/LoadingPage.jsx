@@ -3,14 +3,14 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LargeLogo from '../assets/logo2.jpg'; 
-import '../styles/Loading.css'; // 스피너 CSS import
+import '../styles/Loading.css'; 
 
 const LoadingPage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            navigate('/busan1'); // 3초 후 결과 페이지로 이동
+            navigate('/busan1'); 
         }, 3000); 
 
         return () => clearTimeout(timer);
@@ -31,7 +31,6 @@ const LoadingPage = () => {
                 style={{ height: '100px', margin: '0 auto 20px auto', display: 'block' }} 
             />
             
-            {/* 로딩 스피너 */}
             <div className="spinner"></div> 
             
             <p style={{ 
