@@ -1,3 +1,5 @@
+// src/pages/Option4Page.jsx
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import OptionHeader from '../components-ui/OptionHeader';
@@ -25,7 +27,7 @@ const Option4Page = () => {
         border: '1px solid #ccc',
         cursor: 'pointer',
         fontSize: '1.5em',
-        backgroundColor: isButtonSelected(option) ? '#32CD32' : '#ccc', // 초록색/회색
+        backgroundColor: isButtonSelected(option) ? '#32CD32' : '#ccc', 
         color: isButtonSelected(option) ? 'white' : '#333',
         fontWeight: 'bold',
         transition: 'background-color 0.3s'
