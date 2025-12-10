@@ -1,11 +1,10 @@
-// src/pages/Option3Page.jsx
+// src/pages/Option3Page.jsx (Datepicker로 교체된 최종 코드)
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Calendar from 'react-calendar'; 
-import '../styles/Calendar.css'; // 이 파일의 경로와 대소문자를 확인해주세요!
-
-import LargeLogo from '../assets/logo1.jpg'; // Option 3, 6에서 사용할 중앙 로고
+import DatePicker from 'react-datepicker'; // 👈 새 라이브러리
+import LargeLogo from '../assets/logo1.jpg'; 
+import 'react-datepicker/dist/react-datepicker.css'; // 👈 Datepicker용 필수 CSS
 
 const Option3Page = () => {
     const navigate = useNavigate();
@@ -30,6 +29,15 @@ const Option3Page = () => {
         });
     };
 
+    const dateInputStyle = {
+        padding: '10px', 
+        fontSize: '1em', 
+        border: '1px solid #ccc', 
+        borderRadius: '4px',
+        width: '200px', // 입력 필드 크기 조정
+        cursor: 'pointer'
+    };
+
     return (
         <div style={{ textAlign: 'center', paddingTop: '50px' }}>
             <img 
@@ -47,38 +55,39 @@ const Option3Page = () => {
 
             <div style={{ display: 'flex', justifyContent: 'center', gap: '50px', maxWidth: '1000px', margin: '0 auto' }}>
                 
-                {/* 가는 날 선택 달력 */}
-                <div>
-                    <h3 style={{ marginBottom: '20px', color: goingDate ? '#32CD32' : '#333' }}>
+                {/* 가는 날 선택 */}
+                <div style={{ textAlign: 'left' }}>
+                    <h3 style={{ marginBottom: '20px' }}>
                         📅 가는 날 (체크인)
                     </h3>
-                    <Calendar 
-                        onChange={setGoingDate} 
-                        value={goingDate} 
-                        minDate={new Date()} 
-                        tileDisabled={({date, view}) => view === 'month' && date < new Date()}
-                        selectRange={false}
+                    <DatePicker
+                        selected={goingDate}
+                        onChange={(date) => setGoingDate(date)}
+                        selectsStart
+                        startDate={goingDate}
+                        endDate={comingDate}
+                        minDate={new Date()} // 오늘 이전 날짜 선택 불가
+                        placeholderText="가는 날짜 선택"
+                        customInput={<input style={dateInputStyle} />}
                     />
-                    <p style={{ marginTop: '10px' }}>
-                        {goingDate ? `선택된 날짜: ${goingDate.toDateString()}` : '날짜를 선택하세요.'}
-                    </p>
                 </div>
                 
-                {/* 오는 날 선택 달력 */}
-                <div>
-                    <h3 style={{ marginBottom: '20px', color: comingDate ? '#32CD32' : '#333' }}>
+                {/* 오는 날 선택 */}
+                <div style={{ textAlign: 'left' }}>
+                    <h3 style={{ marginBottom: '20px' }}>
                         🗓️ 오는 날 (체크아웃)
                     </h3>
-                    <Calendar 
-                        onChange={setComingDate} 
-                        value={comingDate} 
-                        minDate={goingDate || new Date()} 
-                        tileDisabled={({date, view}) => view === 'month' && date <= goingDate}
-                        selectRange={false}
+                    <DatePicker
+                        selected={comingDate}
+                        onChange={(date) => setComingDate(date)}
+                        selectsEnd
+                        startDate={goingDate}
+                        endDate={comingDate}
+                        minDate={goingDate || new Date()} // 가는 날 이후 선택 가능
+                        placeholderText="오는 날짜 선택"
+                        customInput={<input style={dateInputStyle} />}
+                        disabled={!goingDate} // 가는 날이 선택되어야 활성화
                     />
-                    <p style={{ marginTop: '10px' }}>
-                        {comingDate ? `선택된 날짜: ${comingDate.toDateString()}` : '날짜를 선택하세요.'}
-                    </p>
                 </div>
             </div>
 
