@@ -2,14 +2,14 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import TraiLogoFull from '../assets/logo2.jpg'; // 파일 이름 logo2.jpg로 통일
-import MainBackgroundImage from '../assets/background.jpg'; // 배경 이미지 import
+import TraiLogoFull from '../assets/logo2.jpg'; 
+import MainBackgroundImage from '../assets/background.jpg'; 
 
 const backgroundStyle = {
     backgroundImage: `url(${MainBackgroundImage})`, 
     backgroundSize: 'cover', 
     backgroundPosition: 'center',
-    height: '100vh', // <-- 화면 높이를 꽉 채우도록 수정
+    height: '100vh', 
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -35,7 +35,7 @@ const MainPageHeader = () => {
             <img 
                 src={TraiLogoFull}
                 alt="TRAI Logo" 
-                style={{ height: '40px', cursor: 'pointer' }} // <-- 로고 크기 수정
+                style={{ height: '40px', cursor: 'pointer' }} 
                 onClick={() => navigate('/')} 
             />
             
@@ -57,6 +57,8 @@ const MainPageHeader = () => {
 };
 
 function MainPage() {
+    const navigate = useNavigate(); // <-- useNavigate 훅 사용 선언
+
     return (
         <>
             <MainPageHeader /> 
@@ -80,7 +82,7 @@ function MainPage() {
                         marginTop: '30px',
                         fontSize: '1em'
                     }}
-                    onClick={() => console.log('AI 추천 시작')}
+                    onClick={() => navigate('/login')} // <-- /login으로 이동하도록 수정
                 >
                     AI 여행 추천 시작하기
                 </button>
