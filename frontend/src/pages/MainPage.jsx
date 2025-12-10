@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import TraiLogoFull from '../assets/Trai_logo2.jpg'; // <-- 확장자 .jpg 통일
-import MainBackgroundImage from '../assets/your_background_image_path.jpg'; // <-- 배경 이미지 import
+import TraiLogoFull from '../assets/logo2.jpg'; // <-- 파일 이름 logo2.jpg로 수정
+import MainBackgroundImage from '../assets/background.jpg'; // <-- 배경 이미지 이름 background.jpg로 수정
 
 const backgroundStyle = {
     // import한 변수를 사용하도록 변경
@@ -18,7 +18,7 @@ const backgroundStyle = {
     padding: '0 80px',
     color: 'white',
     textShadow: '0 0 5px rgba(0,0,0,0.8)',
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: 'rgba(0,0,0,0.5)', 
 };
 
 const MainPageHeader = () => {
@@ -58,6 +58,7 @@ const MainPageHeader = () => {
 };
 
 function MainPage() {
+    // ... (MainPage 컴포넌트 내용은 변경 없음)
     return (
         <>
             <MainPageHeader /> 
