@@ -1,26 +1,111 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Header from '../components-ui/Header'; 
+
+const styles = {
+    container: {
+        maxWidth: '400px',
+        margin: '100px auto', 
+        textAlign: 'center',
+        padding: '20px',
+    },
+    input: {
+        width: '100%',
+        padding: '12px 15px',
+        margin: '8px 0',
+        border: '1px solid #ccc',
+        borderRadius: '4px',
+        boxSizing: 'border-box',
+    },
+    buttonPrimary: {
+        width: '100%',
+        padding: '12px 15px',
+        backgroundColor: '#333', 
+        color: 'white',
+        border: 'none',
+        borderRadius: '4px',
+        cursor: 'pointer',
+        marginTop: '20px',
+        fontSize: '1em',
+        fontWeight: 'bold',
+    },
+    linkButton: {
+        color: '#666',
+        textDecoration: 'none', 
+        cursor: 'pointer',
+        fontSize: '0.9em',
+    },
+    forgotPassword: {
+        fontSize: '0.9em',
+        color: '#666',
+        cursor: 'pointer',
+        textAlign: 'left'
+    }
+};
 
 function LoginPage() {
-  const [isLogin, setIsLogin] = useState(true); // 로그인 <-> 회원가입 전환용
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
-  return (
-    <div style={{ maxWidth: '400px', margin: 'auto', textAlign: 'center' }}>
-      <h2>{isLogin ? '로그인' : '회원가입'}</h2>
-      <form style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        <input type="text" placeholder="아이디" style={{ padding: '10px' }} />
-        <input type="password" placeholder="비밀번호" style={{ padding: '10px' }} />
-        {!isLogin && <input type="text" placeholder="이름 (회원가입용)" style={{ padding: '10px' }} />}
+    const handleLogin = (e) => {
+        e.preventDefault();
         
-        <button type="submit" style={{ padding: '10px', backgroundColor: '#4CAF50', color: 'white', border: 'none' }}>
-          {isLogin ? '로그인하기' : '가입하기'}
-        </button>
-      </form>
-      
-      <p onClick={() => setIsLogin(!isLogin)} style={{ cursor: 'pointer', color: 'blue', marginTop: '10px' }}>
-        {isLogin ? '계정이 없으신가요? 회원가입' : '이미 계정이 있으신가요? 로그인'}
-      </p>
-    </div>
-  );
+        const storedUser = JSON.parse(localStorage.getItem('user'));
+        
+        if (storedUser && storedUser.email === email && storedUser.password === password) {
+            alert('로그인 성공! 메인 페이지로 이동합니다.');
+            navigate('/main'); 
+        } else {
+            alert('로그인 정보가 일치하지 않거나 회원가입이 필요합니다.');
+        }
+    };
+
+    return (
+        <>
+            <Header /> 
+            <div style={styles.container}>
+                <h1 style={{ fontWeight: 800, marginBottom: '40px', fontSize: '2.5em' }}>LOGIN</h1>
+
+                <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column' }}>
+                    
+                    <input 
+                        type="email" 
+                        placeholder="Email" 
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        style={styles.input} 
+                    />
+                    
+                    <input 
+                        type="password" 
+                        placeholder="Password" 
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        style={styles.input} 
+                    />
+                    
+                    <button type="submit" style={styles.buttonPrimary}>
+                        Sign In
+                    </button>
+                </form>
+
+                <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    
+                    <span style={styles.forgotPassword}>
+                        Forgot password?
+                    </span>
+                    
+                    <span 
+                        style={styles.linkButton} 
+                        onClick={() => navigate('/signup')} 
+                    >
+                        Sign up
+                    </span>
+                </div>
+            </div>
+        </>
+    );
 }
 
 export default LoginPage;
