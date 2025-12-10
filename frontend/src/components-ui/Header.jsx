@@ -1,7 +1,8 @@
+// src/components-ui/Header.jsx
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import TraiLogo from '../assets/Trai_logo1.png'; 
+import TraiLogo from '../assets/Trai_logo1.jpg'; // <-- .jpg로 수정
 
 const Header = () => {
     const navigate = useNavigate();
