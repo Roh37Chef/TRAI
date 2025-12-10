@@ -1,4 +1,4 @@
-// src/App.jsx
+// src/App.jsx (최종 확인 버전)
 
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; 
@@ -19,7 +19,7 @@ import Option6Page from './pages/Option6Page';
 
 // 결과 및 로딩 Pages import
 import LoadingPage from './pages/LoadingPage'; 
-import Busan1Page from './pages/Busan1Page'; 
+import Busan1Page from './pages/Busan1Page'; // <-- 이 import가 누락되었을 가능성 큽니다.
 
 import MapPage from './pages/MapPage'; 
 import WelfarePage from './pages/WelfarePage'; 
@@ -47,7 +47,7 @@ function App() {
                     <Route path="/option5" element={<Option5Page />} />
                     <Route path="/option6" element={<Option6Page />} />
                     
-                    {/* 로딩 및 결과 페이지 경로 */}
+                    {/* 👇 /busan1 경로가 정의되어 있는지 확인합니다. 👇 */}
                     <Route path="/loading" element={<LoadingPage />} />
                     <Route path="/busan1" element={<Busan1Page />} />
                     
