@@ -1,3 +1,5 @@
+// src/pages/Option2Page.jsx
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import OptionHeader from '../components-ui/OptionHeader';
@@ -19,7 +21,7 @@ const Option2Page = () => {
         let newStyles;
         if (selectedStyles.includes(style)) {
             newStyles = selectedStyles.filter(s => s !== style);
-        } else if (selectedStyles.length < 3) { // 최대 3개 제한
+        } else if (selectedStyles.length < 3) { 
             newStyles = [...selectedStyles, style];
         } else {
             alert("최대 3개까지 선택할 수 있습니다.");
@@ -45,8 +47,8 @@ const Option2Page = () => {
         border: '1px solid #ccc',
         cursor: 'pointer',
         fontSize: '1.1em',
-        width: '40%', // 버튼 너비 조정
-        backgroundColor: isButtonSelected(style) ? '#32CD32' : '#ccc', // 초록색/회색
+        width: '40%', 
+        backgroundColor: isButtonSelected(style) ? '#32CD32' : '#ccc', 
         color: isButtonSelected(style) ? 'white' : '#333',
         fontWeight: 'bold',
         transition: 'background-color 0.3s',
