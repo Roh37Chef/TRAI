@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import TraiLogo from '../assets/logo1.jpg'; // 파일 이름 logo1.jpg로 통일
+import TraiLogo from '../assets/logo1.jpg'; 
 
 const Header = () => {
     const navigate = useNavigate();
@@ -20,7 +20,7 @@ const Header = () => {
             <img 
                 src={TraiLogo} 
                 alt="TRAI Logo" 
-                style={{ height: '40px' }} // <-- 로고 크기 수정
+                style={{ height: '40px' }} 
                 onClick={() => navigate('/login')}
             />
         </header>
