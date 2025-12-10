@@ -23,9 +23,7 @@ const Option6Page = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         
-        // 여기에 최종 데이터 전송 로직 구현 (생략)
-        
-        navigate('/loading'); // <-- LoadingPage로 이동하도록 수정
+        navigate('/loading'); 
     };
 
     const inputStyle = {
