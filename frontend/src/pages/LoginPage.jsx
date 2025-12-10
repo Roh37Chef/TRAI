@@ -56,8 +56,8 @@ function LoginPage() {
         const storedUser = JSON.parse(localStorage.getItem('user'));
         
         if (storedUser && storedUser.email === email && storedUser.password === password) {
-            alert('로그인 성공! 메인 페이지로 이동합니다.');
-            navigate('/main'); 
+            alert('로그인 성공! AI 추천 페이지로 이동합니다.');
+            navigate('/loginsuccess'); // 최종 확인: /loginsuccess로 이동
         } else {
             alert('로그인 정보가 일치하지 않거나 회원가입이 필요합니다.');
         }
