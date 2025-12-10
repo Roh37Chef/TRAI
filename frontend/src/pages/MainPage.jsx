@@ -9,7 +9,7 @@ const backgroundStyle = {
     backgroundImage: `url(${MainBackgroundImage})`, 
     backgroundSize: 'cover', 
     backgroundPosition: 'center',
-    height: '100vh', 
+    height: '100vh', // 화면 높이를 꽉 채우도록 수정
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -82,7 +82,7 @@ function MainPage() {
                         marginTop: '30px',
                         fontSize: '1em'
                     }}
-                    onClick={() => navigate('/login')} // <-- /login으로 이동
+                    onClick={() => navigate('/login')} // /login으로 이동
                 >
                     AI 여행 추천 시작하기
                 </button>
