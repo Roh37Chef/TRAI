@@ -1,13 +1,11 @@
-
+// src/pages/MainPage.jsx
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from '../components-ui/Header'; 
-import TraiLogoFull from '../assets/Trai_logo2.jpg'; 
-
+import TraiLogoFull from '../assets/Trai_logo2.jpg'; // <-- .jpg로 수정
 
 const backgroundStyle = {
-    backgroundImage: `url('your_background_image_path.jpg')`,
+    backgroundImage: `url('your_background_image_path.jpg')`, 
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     height: 'calc(100vh - 70px)', 
@@ -21,11 +19,9 @@ const backgroundStyle = {
     backgroundColor: 'rgba(0,0,0,0.5)',
 };
 
-
 const MainPageHeader = () => {
     const navigate = useNavigate();
     
-  
     return (
         <header style={{ 
             padding: '20px 40px', 
@@ -33,17 +29,15 @@ const MainPageHeader = () => {
             backgroundColor: 'white',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between', 
+            justifyContent: 'space-between',
         }}>
-            {/* TRAI 로고 (Header.jsx에서 가져온 스타일과 동일하게) */}
             <img 
-                src={TraiLogoFull} 
+                src={TraiLogoFull}
                 alt="TRAI Logo" 
                 style={{ height: '30px', cursor: 'pointer' }} 
                 onClick={() => navigate('/')} 
             />
             
-            {/* Login 버튼 */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
                 <span style={{ cursor: 'pointer', fontWeight: 'bold' }} onClick={() => navigate('/login')}>
                     Login
@@ -56,17 +50,14 @@ const MainPageHeader = () => {
                 }} onClick={() => navigate('/signup')}>
                     Sign up
                 </span>
-                {/* 햄버거 메뉴는 일단 생략합니다. */}
             </div>
         </header>
     );
 };
 
-
 function MainPage() {
     return (
         <>
-            {/* 메인 페이지는 Header.jsx 대신 Login 버튼이 있는 자체 헤더를 사용합니다. */}
             <MainPageHeader /> 
             
             <div style={backgroundStyle}>
@@ -77,7 +68,6 @@ function MainPage() {
                     나를 위한 여행, TRAI
                 </h1>
                 
-                {/* 메인 페이지의 AI 추천 시작 버튼 등을 여기에 추가합니다. */}
                 <button 
                     style={{ 
                         padding: '12px 30px', 
@@ -89,7 +79,7 @@ function MainPage() {
                         marginTop: '30px',
                         fontSize: '1em'
                     }}
-                    onClick={() => navigate('/main-input')}
+                    onClick={() => console.log('AI 추천 시작')}
                 >
                     AI 여행 추천 시작하기
                 </button>
