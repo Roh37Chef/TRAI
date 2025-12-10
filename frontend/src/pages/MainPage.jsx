@@ -2,15 +2,14 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import TraiLogoFull from '../assets/logo2.jpg'; // <-- 파일 이름 logo2.jpg로 수정
-import MainBackgroundImage from '../assets/background.jpg'; // <-- 배경 이미지 이름 background.jpg로 수정
+import TraiLogoFull from '../assets/logo2.jpg'; // 파일 이름 logo2.jpg로 통일
+import MainBackgroundImage from '../assets/background.jpg'; // 배경 이미지 import
 
 const backgroundStyle = {
-    // import한 변수를 사용하도록 변경
     backgroundImage: `url(${MainBackgroundImage})`, 
-    backgroundSize: 'cover',
+    backgroundSize: 'cover', 
     backgroundPosition: 'center',
-    height: 'calc(100vh - 70px)', 
+    height: '100vh', // <-- 화면 높이를 꽉 채우도록 수정
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -36,7 +35,7 @@ const MainPageHeader = () => {
             <img 
                 src={TraiLogoFull}
                 alt="TRAI Logo" 
-                style={{ height: '30px', cursor: 'pointer' }} 
+                style={{ height: '40px', cursor: 'pointer' }} // <-- 로고 크기 수정
                 onClick={() => navigate('/')} 
             />
             
@@ -58,7 +57,6 @@ const MainPageHeader = () => {
 };
 
 function MainPage() {
-    // ... (MainPage 컴포넌트 내용은 변경 없음)
     return (
         <>
             <MainPageHeader /> 
