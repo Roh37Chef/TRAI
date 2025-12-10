@@ -1,10 +1,12 @@
+// src/pages/Option6Page.jsx
+
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import LargeLogo from '../assets/logo1.jpg'; // Option 3, 6에서 사용할 중앙 로고
+import LargeLogo from '../assets/logo1.jpg'; 
 
 const Option6Page = () => {
     const navigate = useNavigate();
-    const location = useLocation(); // 이전 페이지에서 전달된 정보를 받기 위함
+    const location = useLocation(); 
     
     const [inputs, setInputs] = useState({
         destination: '',
@@ -21,16 +23,9 @@ const Option6Page = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         
-        // 여기에 최종적으로 모든 데이터를 서버로 전송하는 로직 구현 (예정)
-        console.log("최종 입력 데이터:", { 
-            ...location.state, // 이전 5개 페이지에서 넘어온 데이터
-            ...inputs // 현재 페이지에서 입력한 데이터
-        });
+        // 여기에 최종 데이터 전송 로직 구현 (생략)
         
-        alert("모든 정보가 입력되었습니다. AI 추천을 시작합니다!");
-        
-        // 나중에 추천 결과 페이지(/result)로 이동하도록 수정
-        navigate('/loginsuccess'); // 임시로 다시 로그인 성공 페이지로 이동
+        navigate('/loading'); // <-- LoadingPage로 이동하도록 수정
     };
 
     const inputStyle = {
@@ -54,7 +49,6 @@ const Option6Page = () => {
 
     return (
         <div style={{ textAlign: 'center', paddingTop: '50px', backgroundColor: '#f9f9f9', minHeight: '100vh' }}>
-            {/* Option 6은 logo1.jpg를 중앙에 크게 배치 */}
             <img 
                 src={LargeLogo} 
                 alt="TRAI Logo" 
