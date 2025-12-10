@@ -1,16 +1,24 @@
 // src/pages/Busan1Page.jsx
 
 import React from 'react';
-import { useNavermaps, NaverMap, Marker } from 'react-naver-maps';
+import { useNavermaps, NaverMap } from 'react-naver-maps'; // Marker 제거
 import TraiLogo from '../assets/logo1.jpg'; 
 
 const Busan1Page = () => {
     const navermaps = useNavermaps();
     
-    // 네이버 맵의 초기 중심 좌표 (예시: 부산 시청)
-    const initialCenter = navermaps ? new navermaps.LatLng(35.1795, 129.0756) : null;
+    // 네이버 지도 API 객체가 로드되지 않았다면 로딩 메시지 반환
+    if (!navermaps) {
+        return (
+            <div style={{ textAlign: 'center', paddingTop: '100px' }}>
+                지도 API 로딩 중... (Client ID 확인 필요)
+            </div>
+        );
+    }
     
-    // 여행 일정을 관리하는 사이드바 데이터 (예시)
+    // 초기 중심 좌표 (부산 시청)
+    const initialCenter = new navermaps.LatLng(35.1795, 129.0756); 
+    
     const schedule = [
         { day: 'DAY 1', title: '해운대 & 달맞이길' },
         { day: 'DAY 2', title: '감천 문화마을 투어' },
@@ -18,7 +26,6 @@ const Busan1Page = () => {
         { day: 'DAY 4', title: '서면 맛집 탐방' },
     ];
     
-    // 사이드바 스타일 정의
     const sidebarStyle = {
         width: '300px',
         height: '100vh',
@@ -27,7 +34,7 @@ const Busan1Page = () => {
         boxShadow: '2px 0 5px rgba(0,0,0,0.1)',
         display: 'flex',
         flexDirection: 'column',
-        zIndex: 10 // 지도 위에 표시되도록 zIndex 설정
+        zIndex: 10 
     };
 
     const logoStyle = {
@@ -49,7 +56,6 @@ const Busan1Page = () => {
                     부산
                 </h2>
 
-                {/* Day별 일정 목록 */}
                 {schedule.map((item, index) => (
                     <div key={index} style={{ marginBottom: '10px' }}>
                         <div style={{ 
@@ -67,8 +73,7 @@ const Busan1Page = () => {
                         </div>
                     </div>
                 ))}
-
-                {/* 여행 기부 계획 확인 버튼 */}
+                
                 <button style={{ 
                     padding: '10px', 
                     backgroundColor: '#e0e0e0', 
@@ -84,26 +89,14 @@ const Busan1Page = () => {
 
             {/* 우측 네이버 지도 영역 */}
             <div style={{ flexGrow: 1 }}>
-                {navermaps && initialCenter && (
-                    <NaverMap
-                        defaultCenter={initialCenter}
-                        defaultZoom={12}
-                        style={{ width: '100%', height: '100%' }}
-                        zoomControl={true}
-                        scaleControl={true}
-                    >
-                        {/* 마커 예시: 부산역 */}
-                        <Marker 
-                            position={new navermaps.LatLng(35.1154, 129.0416)} 
-                            title="부산역" 
-                        />
-                    </NaverMap>
-                )}
-                {!navermaps && (
-                    <div style={{ padding: '20px', textAlign: 'center' }}>
-                        네이버 지도 로딩 중이거나 API 설정이 필요합니다.
-                    </div>
-                )}
+                <NaverMap
+                    defaultCenter={initialCenter}
+                    defaultZoom={12}
+                    style={{ width: '100%', height: '100%' }}
+                    zoomControl={true}
+                >
+                    {/* 마커는 제거하고 기본 지도만 표시 */}
+                </NaverMap>
             </div>
         </div>
     );
