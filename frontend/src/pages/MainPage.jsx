@@ -57,7 +57,7 @@ const MainPageHeader = () => {
 };
 
 function MainPage() {
-    const navigate = useNavigate(); // <-- useNavigate 훅 사용 선언
+    const navigate = useNavigate(); 
 
     return (
         <>
@@ -82,7 +82,7 @@ function MainPage() {
                         marginTop: '30px',
                         fontSize: '1em'
                     }}
-                    onClick={() => navigate('/login')} // <-- /login으로 이동하도록 수정
+                    onClick={() => navigate('/login')} // <-- /login으로 이동
                 >
                     AI 여행 추천 시작하기
                 </button>
