@@ -1,15 +1,16 @@
+// src/pages/Option3Page.jsx
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Calendar from 'react-calendar'; // 달력 라이브러리 (npm install react-calendar 필요)
-import '../styles/Calendar.css'; // 달력 스타일을 위한 CSS 파일이 필요함
+import Calendar from 'react-calendar'; 
+import '../styles/Calendar.css'; // 이 파일이 src/styles 폴더에 있어야 합니다.
 
-// Option 3, 6에서 사용할 중앙 로고 (logo1.jpg)
-import LargeLogo from '../assets/logo1.jpg'; 
+import LargeLogo from '../assets/logo1.jpg'; // Option 3, 6에서 사용할 중앙 로고
 
 const Option3Page = () => {
     const navigate = useNavigate();
-    const [goingDate, setGoingDate] = useState(null); // 가는 날
-    const [comingDate, setComingDate] = useState(null); // 오는 날
+    const [goingDate, setGoingDate] = useState(null); 
+    const [comingDate, setComingDate] = useState(null); 
 
     const handleNext = () => {
         if (!goingDate || !comingDate) {
@@ -21,7 +22,6 @@ const Option3Page = () => {
             return;
         }
         
-        // 날짜를 ISO 문자열로 변환하여 다음 페이지로 전달
         navigate('/option4', { 
             state: { 
                 goingDate: goingDate.toISOString().split('T')[0], 
@@ -32,7 +32,6 @@ const Option3Page = () => {
 
     return (
         <div style={{ textAlign: 'center', paddingTop: '50px' }}>
-            {/* Option 3은 logo1.jpg를 중앙에 크게 배치 */}
             <img 
                 src={LargeLogo} 
                 alt="TRAI Logo" 
@@ -56,7 +55,7 @@ const Option3Page = () => {
                     <Calendar 
                         onChange={setGoingDate} 
                         value={goingDate} 
-                        minDate={new Date()} // 오늘 이전 날짜 선택 불가
+                        minDate={new Date()} 
                         tileDisabled={({date, view}) => view === 'month' && date < new Date()}
                         selectRange={false}
                     />
@@ -73,7 +72,7 @@ const Option3Page = () => {
                     <Calendar 
                         onChange={setComingDate} 
                         value={comingDate} 
-                        minDate={goingDate || new Date()} // 가는 날 이후 또는 오늘 이후만 선택 가능
+                        minDate={goingDate || new Date()} 
                         tileDisabled={({date, view}) => view === 'month' && date <= goingDate}
                         selectRange={false}
                     />
