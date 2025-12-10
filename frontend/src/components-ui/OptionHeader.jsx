@@ -1,30 +1,29 @@
-// src/components-ui/Header.jsx
+// src/components-ui/OptionHeader.jsx
 
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import TraiLogo from '../assets/logo1.jpg'; 
+import TraiLogo from '../assets/logo2.jpg'; // Option 1, 2, 4, 5에서 사용할 로고
 
-const Header = () => {
-    const navigate = useNavigate();
-
+const OptionHeader = () => {
     return (
         <header style={{ 
-            padding: '20px 40px', 
-            borderBottom: '1px solid #eee', 
+            padding: '40px 0', 
+            borderBottom: 'none', 
             backgroundColor: 'white',
             display: 'flex',
+            justifyContent: 'center', 
             alignItems: 'center',
-            cursor: 'pointer',
-            justifyContent: 'flex-start'
+            flexDirection: 'column'
         }}>
             <img 
                 src={TraiLogo} 
                 alt="TRAI Logo" 
-                style={{ height: '40px' }} 
-                onClick={() => navigate('/login')}
+                style={{ height: '70px', marginBottom: '10px' }} 
             />
+            <p style={{ fontSize: '0.9em', color: '#32CD32', fontWeight: 'bold' }}>
+                AI-PLANNED, PERSONALIZED ADVENTURES
+            </p>
         </header>
     );
 };
 
-export default Header;
+export default OptionHeader;
