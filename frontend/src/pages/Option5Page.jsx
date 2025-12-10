@@ -1,3 +1,5 @@
+// src/pages/Option5Page.jsx
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import OptionHeader from '../components-ui/OptionHeader';
@@ -13,7 +15,6 @@ const Option5Page = () => {
             alert("사회적 약자 여부를 선택해주세요.");
             return;
         }
-        // 사회적 약자 여부를 boolean으로 변환하여 전달
         const value = isVulnerable === "예"; 
         navigate('/option6', { state: { isVulnerable: value } });
     };
@@ -27,7 +28,7 @@ const Option5Page = () => {
         border: '1px solid #ccc',
         cursor: 'pointer',
         fontSize: '1.5em',
-        backgroundColor: isButtonSelected(option) ? '#32CD32' : '#ccc', // 초록색/회색
+        backgroundColor: isButtonSelected(option) ? '#32CD32' : '#ccc', 
         color: isButtonSelected(option) ? 'white' : '#333',
         fontWeight: 'bold',
         transition: 'background-color 0.3s'
