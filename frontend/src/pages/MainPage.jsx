@@ -2,10 +2,12 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import TraiLogoFull from '../assets/Trai_logo2.jpg'; // <-- .jpg로 수정
+import TraiLogoFull from '../assets/Trai_logo2.jpg'; // <-- 확장자 .jpg 통일
+import MainBackgroundImage from '../assets/your_background_image_path.jpg'; // <-- 배경 이미지 import
 
 const backgroundStyle = {
-    backgroundImage: `url('your_background_image_path.jpg')`, 
+    // import한 변수를 사용하도록 변경
+    backgroundImage: `url(${MainBackgroundImage})`, 
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     height: 'calc(100vh - 70px)', 
