@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import TraiLogo from '../assets/Trai_logo1.jpg'; // <-- .jpg로 수정
+import TraiLogo from '../assets/logo1.jpg';
 
 const Header = () => {
     const navigate = useNavigate();
