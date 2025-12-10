@@ -1,7 +1,8 @@
+// src/pages/LoginSuccessPage.jsx
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// Main Page와 동일한 로고, 배경을 사용합니다.
 import TraiLogoFull from '../assets/logo2.jpg'; 
 import MainBackgroundImage from '../assets/background.jpg'; 
 
@@ -23,7 +24,6 @@ const backgroundStyle = {
 const LoginSuccessPageHeader = () => {
     const navigate = useNavigate();
     
-    // 로그인 성공 후에는 우측 상단 메뉴를 다르게 보여줍니다.
     return (
         <header style={{ 
             padding: '20px 40px', 
@@ -37,7 +37,7 @@ const LoginSuccessPageHeader = () => {
                 src={TraiLogoFull}
                 alt="TRAI Logo" 
                 style={{ height: '40px', cursor: 'pointer' }} 
-                onClick={() => navigate('/loginsuccess')} // 로그인 후 메인 화면 역할
+                onClick={() => navigate('/loginsuccess')} 
             />
             
             <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
@@ -66,7 +66,6 @@ function LoginSuccessPage() {
             alert("URL을 입력해 주세요.");
             return;
         }
-        // URL을 가지고 다음 페이지로 이동
         navigate('/option1', { state: { url } }); 
     };
 
@@ -82,7 +81,6 @@ function LoginSuccessPage() {
                     여행 정보를 입력해 주세요
                 </h1>
                 
-                {/* 👇 URL 입력 박스 👇 */}
                 <input
                     type="url"
                     placeholder="분석할 블로그 글의 URL을 여기에 붙여넣어 주세요."
