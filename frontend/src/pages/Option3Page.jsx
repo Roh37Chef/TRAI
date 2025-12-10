@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Calendar from 'react-calendar'; 
-import '../styles/Calendar.css'; // 이 파일이 src/styles 폴더에 있어야 합니다.
+import '../styles/Calendar.css'; // 이 파일의 경로와 대소문자를 확인해주세요!
 
 import LargeLogo from '../assets/logo1.jpg'; // Option 3, 6에서 사용할 중앙 로고
 
