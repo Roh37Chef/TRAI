@@ -7,7 +7,16 @@ import { NavermapsProvider } from 'react-naver-maps';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 import MainPage from './pages/MainPage'; 
-import LoginSuccessPage from './pages/LoginSuccessPage'; // <-- import 추가
+import LoginSuccessPage from './pages/LoginSuccessPage';
+
+// 👇 Option Pages import 추가 👇
+import Option1Page from './pages/Option1Page'; 
+import Option2Page from './pages/Option2Page';
+import Option3Page from './pages/Option3Page';
+import Option4Page from './pages/Option4Page';
+import Option5Page from './pages/Option5Page';
+import Option6Page from './pages/Option6Page';
+
 import MapPage from './pages/MapPage'; 
 import WelfarePage from './pages/WelfarePage'; 
 
@@ -20,10 +29,15 @@ function App() {
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/signup" element={<SignUpPage />} />
                     <Route path="/main" element={<MainPage />} />
-                    
-                    {/* 👇 새로 추가된 경로 👇 */}
                     <Route path="/loginsuccess" element={<LoginSuccessPage />} /> 
-                    <Route path="/option1" element={<div>Option 1 Page</div>} /> 
+                    
+                    {/* 👇 Option Pages 경로 추가 👇 */}
+                    <Route path="/option1" element={<Option1Page />} />
+                    <Route path="/option2" element={<Option2Page />} />
+                    <Route path="/option3" element={<Option3Page />} />
+                    <Route path="/option4" element={<Option4Page />} />
+                    <Route path="/option5" element={<Option5Page />} />
+                    <Route path="/option6" element={<Option6Page />} />
                     
                     <Route path="/map" element={<MapPage />} />
                     <Route path="/welfare" element={<WelfarePage />} />
