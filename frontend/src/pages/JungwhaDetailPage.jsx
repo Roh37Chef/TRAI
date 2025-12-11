@@ -1,16 +1,18 @@
-// src/pages/JungwhaDetailPage.jsx (리뷰 팝업 기능 추가 최종 버전)
+// src/pages/JungwhaDetailPage.jsx (user.jpg 적용 최종 버전)
 
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TraiLogo from '../assets/logo2.jpg'; 
 import JungwhaMapImage from '../assets/jungwha_map_image.jpg'; 
 
-// 👇 팝업 이미지 파일들을 불러옵니다. 👇
+// 👇 프로필 이미지를 'user.jpg'로 변경합니다. 👇
+import UserProfile from '../assets/user.jpg'; 
+
 import PopupImg1 from '../assets/popup_review_img1.jpg';
 import PopupImg2 from '../assets/popup_review_img2.jpg';
 import PopupImg3 from '../assets/popup_review_img3.jpg';
 import PopupImg4 from '../assets/popup_review_img4.jpg';
-import UserProfile from '../assets/user_profile_default.jpg'; // 사용자 프로필 이미지 (임시로 하나 추가)
+
 
 const styles = {
     header: {
@@ -79,14 +81,13 @@ const styles = {
         marginBottom: '15px',
         backgroundColor: 'white',
         textAlign: 'left',
-        cursor: 'pointer', // 클릭 가능 표시
+        cursor: 'pointer',
     },
     reviewDate: {
         fontSize: '0.85em',
         color: '#999',
         marginTop: '5px'
     },
-    // 모달 스타일
     modalOverlay: {
         position: 'fixed',
         top: 0,
@@ -101,7 +102,7 @@ const styles = {
     },
     modalContent: {
         backgroundColor: 'white',
-        width: '800px', // 스크린샷과 유사한 너비
+        width: '800px', 
         maxHeight: '90%',
         borderRadius: '10px',
         padding: '30px',
@@ -222,6 +223,7 @@ const ReviewModal = ({ isOpen, onClose, review }) => {
                 
                 {/* 헤더: 프로필, 이름, 날짜, 별점 */}
                 <div style={styles.modalReviewHeader}>
+                    {/* 👇 user.jpg에서 불러온 UserProfile 변수를 사용합니다. 👇 */}
                     <img src={UserProfile} alt="프로필" style={styles.profileImg} />
                     <div>
                         <div style={{ fontWeight: 'bold', fontSize: '1.2em' }}>김여행</div>
@@ -254,13 +256,11 @@ function JungwhaDetailPage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedReview, setSelectedReview] = useState(null);
 
-    // 리뷰 아이템 클릭 핸들러 (어떤 리뷰든 동일 팝업을 띄움)
     const handleReviewClick = (review) => {
-        setSelectedReview(review); // 클릭한 리뷰 데이터를 저장 (별점 반영)
+        setSelectedReview(review); 
         setIsModalOpen(true);
     };
 
-    // 정렬 로직
     const sortedReviews = useMemo(() => {
         let sorted = [...DUMMY_REVIEWS];
         
@@ -325,7 +325,7 @@ function JungwhaDetailPage() {
                         <div 
                             key={review.id} 
                             style={styles.reviewItem}
-                            onClick={() => handleReviewClick(review)} // 팝업 열기
+                            onClick={() => handleReviewClick(review)}
                         >
                             <p style={{ margin: '0', fontSize: '1em' }}>{review.content}</p>
                             <div style={styles.reviewDate}>
