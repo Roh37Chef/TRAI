@@ -1,11 +1,31 @@
-// src/pages/Option3Page.jsx
+// src/pages/Option3Page.jsx (react-datepicker 최종 버전)
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Calendar from 'react-calendar'; 
-import '../styles/Calendar.css'; // react-calendar 스타일 파일 import
+import DatePicker from 'react-datepicker'; 
+import 'react-datepicker/dist/react-datepicker.css'; // DatePicker의 필수 CSS import
 
 import LargeLogo from '../assets/logo1.jpg'; 
+
+// DatePicker 스타일 오버라이드를 위한 CSS (인라인 스타일)
+const datePickerContainerStyle = {
+    display: 'flex', 
+    justifyContent: 'center', 
+    gap: '50px', 
+    maxWidth: '1000px', 
+    margin: '0 auto',
+};
+
+const inputStyle = {
+    padding: '10px',
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+    fontSize: '1em',
+    textAlign: 'center',
+    cursor: 'pointer',
+    width: '200px',
+    marginTop: '10px',
+};
 
 const Option3Page = () => {
     const navigate = useNavigate();
@@ -22,7 +42,6 @@ const Option3Page = () => {
             return;
         }
         
-        // Option 4 페이지로 이동
         navigate('/option4', { 
             state: { 
                 goingDate: goingDate.toISOString().split('T')[0], 
@@ -46,38 +65,43 @@ const Option3Page = () => {
                 Q. 원하는 날짜를 선택해주세요.
             </h2>
 
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '50px', maxWidth: '1000px', margin: '0 auto' }}>
+            <div style={datePickerContainerStyle}>
                 
-                {/* 가는 날 선택 달력 */}
+                {/* 가는 날 선택 */}
                 <div>
                     <h3 style={{ marginBottom: '20px', color: goingDate ? '#32CD32' : '#333' }}>
                         📅 가는 날 (체크인)
                     </h3>
-                    <Calendar 
-                        onChange={setGoingDate} 
-                        value={goingDate} 
-                        minDate={new Date()} 
-                        tileDisabled={({date, view}) => view === 'month' && date < new Date()}
-                        selectRange={false}
+                    <DatePicker 
+                        selected={goingDate}
+                        onChange={(date) => setGoingDate(date)}
+                        selectsStart
+                        startDate={goingDate}
+                        endDate={comingDate}
+                        minDate={new Date()}
+                        customInput={<input style={inputStyle} readOnly placeholder="날짜 선택"/>}
                     />
-                    <p style={{ marginTop: '10px' }}>
+                    <p style={{ marginTop: '10px', fontSize: '0.9em' }}>
                         {goingDate ? `선택된 날짜: ${goingDate.toDateString()}` : '날짜를 선택하세요.'}
                     </p>
                 </div>
                 
-                {/* 오는 날 선택 달력 */}
+                {/* 오는 날 선택 */}
                 <div>
                     <h3 style={{ marginBottom: '20px', color: comingDate ? '#32CD32' : '#333' }}>
                         🗓️ 오는 날 (체크아웃)
                     </h3>
-                    <Calendar 
-                        onChange={setComingDate} 
-                        value={comingDate} 
+                    <DatePicker 
+                        selected={comingDate}
+                        onChange={(date) => setComingDate(date)}
+                        selectsEnd
+                        startDate={goingDate}
+                        endDate={comingDate}
                         minDate={goingDate || new Date()} 
-                        tileDisabled={({date, view}) => view === 'month' && date <= goingDate}
-                        selectRange={false}
+                        customInput={<input style={inputStyle} readOnly placeholder="날짜 선택"/>}
+                        disabled={!goingDate} // 가는 날이 선택되어야 오는 날 선택 가능
                     />
-                    <p style={{ marginTop: '10px' }}>
+                    <p style={{ marginTop: '10px', fontSize: '0.9em' }}>
                         {comingDate ? `선택된 날짜: ${comingDate.toDateString()}` : '날짜를 선택하세요.'}
                     </p>
                 </div>
