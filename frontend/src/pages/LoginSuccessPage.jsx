@@ -1,205 +1,75 @@
-// src/pages/LoginSuccessPage.jsx (티켓 구매 항목 추가 최종 버전)
+// src/pages/LoginSuccessPage.jsx (최종 - Header 컴포넌트 사용 및 경로 수정)
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Header from '../components-ui/Header'; // 👈 경로 수정
 
 import TraiLogoFull from '../assets/logo2.jpg'; 
 import MainBackgroundImage from '../assets/background.jpg'; 
 
 const backgroundStyle = {
-    backgroundImage: `url(${MainBackgroundImage})`, 
-    backgroundSize: 'cover', 
+    backgroundImage: `url(${MainBackgroundImage})`,
+    backgroundSize: 'cover',
     backgroundPosition: 'center',
-    height: '100vh',
+    height: 'calc(100vh - 100px)', // 헤더 높이 100px 제외
     display: 'flex',
     flexDirection: 'column',
+    alignItems: 'center',
     justifyContent: 'center',
-    alignItems: 'flex-start',
-    padding: '0 80px',
     color: 'white',
-    textShadow: '0 0 5px rgba(0,0,0,0.8)',
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    textAlign: 'center',
+    padding: '0 20px',
 };
 
-// 사이드바 메뉴 항목 정의
 const MENU_ITEMS = [
-    { name: '가계부', route: '/moneypage' },
-    { name: '여행후기', route: '/reviewpage' },
-    { name: '장애인 지원제도 안내', route: '/disabledpersonpage' },
-    { name: '티켓 구매', route: '/ticketpage' }, // ✅ 새로 추가된 항목
-    {
-        name: '마이페이지',
-        subItems: [
-            { name: '여행 계획', route: '/myplanpage' },
-            { name: '리뷰', route: '/myreviewpage' },
-        ],
-    },
+    { name: '여행 계획', path: '/myplanpage' },
+    { name: '리뷰', path: '/myreviewpage' },
+    { name: '가계부', path: '/moneypage' },
+    { name: '티켓 구매', path: '/ticketpage' },
+    { name: '여행 후기', path: '/reviewpage' },
+    { name: '장애인 여행 지원 제도 안내', path: '/disabledpersonpage' },
 ];
 
-
-// 햄버거 메뉴를 위한 Sidebar 컴포넌트
 const Sidebar = ({ isOpen, onClose, navigate }) => {
-    const [isMyPageOpen, setIsMyPageOpen] = useState(false);
-
-    const sidebarStyle = {
-        position: 'fixed',
-        top: 0,
-        right: isOpen ? 0 : '-350px', // 메뉴가 열리면 0, 닫히면 오른쪽으로 숨김
-        width: '300px',
-        height: '100%',
-        backgroundColor: 'white',
-        boxShadow: '0 0 10px rgba(0,0,0,0.3)',
-        transition: 'right 0.3s ease-in-out',
-        zIndex: 1000,
-        padding: '30px',
-        display: 'flex',
-        flexDirection: 'column',
-    };
-
-    const menuButtonStyle = {
-        padding: '15px 10px',
-        textAlign: 'left',
-        fontSize: '1.2em',
-        border: 'none',
-        backgroundColor: 'transparent',
-        cursor: 'pointer',
-        borderBottom: '1px solid #eee',
-        fontWeight: '500',
-        color: '#333'
-    };
-
-    const submenuButtonStyle = {
-        ...menuButtonStyle,
-        paddingLeft: '30px',
-        fontSize: '1.1em',
-        backgroundColor: '#f5f5f5',
-        borderBottom: 'none'
-    };
-    
-    const handleNavigation = (path) => {
-        onClose(); // 메뉴 닫기
-        navigate(path);
-    };
-    
-    const handleMyPageClick = () => {
-        setIsMyPageOpen(!isMyPageOpen);
-    };
-
     return (
-        <>
-            {/* 어두운 배경 (메뉴가 열렸을 때만 표시) */}
-            {isOpen && <div 
-                style={{ 
-                    position: 'fixed', 
-                    top: 0, 
-                    left: 0, 
-                    width: '100%', 
-                    height: '100%', 
-                    backgroundColor: 'rgba(0, 0, 0, 0.5)', 
-                    zIndex: 999 
-                }} 
-                onClick={onClose} 
-            />}
-            
-            <div style={sidebarStyle}>
-                
-                {/* 닫기 버튼 */}
-                <button 
-                    onClick={onClose} 
-                    style={{ 
-                        alignSelf: 'flex-end', 
-                        fontSize: '2em', 
-                        background: 'none', 
-                        border: 'none', 
-                        cursor: 'pointer',
-                        marginBottom: '30px',
-                        color: '#333'
-                    }}
-                >
-                    &times;
-                </button>
-
-                {/* 메뉴 항목들 렌더링 */}
-                {MENU_ITEMS.map((item, index) => {
-                    if (item.subItems) {
-                        return (
-                            <React.Fragment key={index}>
-                                <button style={menuButtonStyle} onClick={handleMyPageClick}>
-                                    {item.name} {isMyPageOpen ? '▲' : '▼'}
-                                </button>
-                                {isMyPageOpen && (
-                                    <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                        {item.subItems.map(subItem => (
-                                            <button key={subItem.name} style={submenuButtonStyle} onClick={() => handleNavigation(subItem.route)}>
-                                                {subItem.name}
-                                            </button>
-                                        ))}
-                                    </div>
-                                )}
-                            </React.Fragment>
-                        );
-                    }
-                    return (
-                        <button key={index} style={menuButtonStyle} onClick={() => handleNavigation(item.route)}>
-                            {item.name}
-                        </button>
-                    );
-                })}
-                
-                {/* 로그아웃 버튼 (하단 고정) */}
-                <button 
-                    style={{...menuButtonStyle, marginTop: 'auto', borderTop: '1px solid #eee'}} 
-                    onClick={() => handleNavigation('/login')}
-                >
-                    로그아웃
-                </button>
-
-            </div>
-        </>
-    );
-};
-
-
-const LoginSuccessPageHeader = ({ onMenuClick }) => {
-    const navigate = useNavigate();
-    
-    return (
-        <header style={{ 
-            padding: '20px 40px', 
-            borderBottom: '1px solid #eee', 
+        <div style={{
+            position: 'fixed',
+            top: 0,
+            right: 0,
+            width: '300px',
+            height: '100%',
             backgroundColor: 'white',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
+            boxShadow: '0 0 10px rgba(0,0,0,0.5)',
+            transform: isOpen ? 'translateX(0)' : 'translateX(100%)',
+            transition: 'transform 0.3s ease-in-out',
+            zIndex: 1000,
+            padding: '20px',
         }}>
-            <img 
-                src={TraiLogoFull}
-                alt="TRAI Logo" 
-                style={{ height: '40px', cursor: 'pointer' }} 
-                onClick={() => navigate('/loginsuccess')} 
-            />
-            
-            {/* 햄버거 아이콘 */}
-            <button 
-                onClick={onMenuClick}
-                style={{
-                    background: 'none',
-                    border: 'none',
-                    cursor: 'pointer',
-                    fontSize: '24px',
-                    padding: '5px',
-                }}
-            >
-                &#9776;
-            </button>
-        </header>
+            <h3 style={{ borderBottom: '1px solid #eee', paddingBottom: '10px' }}>메뉴</h3>
+            <ul>
+                {MENU_ITEMS.map(item => (
+                    <li key={item.name} style={{ listStyle: 'none', padding: '15px 0', borderBottom: '1px dotted #eee', cursor: 'pointer' }}
+                        onClick={() => {
+                            navigate(item.path);
+                            onClose();
+                        }}
+                    >
+                        {item.name}
+                    </li>
+                ))}
+            </ul>
+            <button onClick={onClose} style={{ marginTop: '20px', padding: '10px 20px', background: '#ccc', border: 'none', cursor: 'pointer' }}>닫기</button>
+        </div>
     );
 };
+
 
 function LoginSuccessPage() {
     const navigate = useNavigate();
     const [url, setUrl] = useState('');
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+    const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
     const handleGenerateSchedule = () => {
         if (!url) {
@@ -211,33 +81,31 @@ function LoginSuccessPage() {
 
     return (
         <>
-            <LoginSuccessPageHeader onMenuClick={() => setIsSidebarOpen(true)} /> 
-            <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} navigate={navigate} />
+            <Header showMenuButton={true} onMenuClick={toggleSidebar} /> 
+            <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} navigate={navigate} />
 
             <div style={backgroundStyle}>
-                <p style={{ fontSize: '1.2em', marginBottom: '10px' }}>
+                <h1 style={{ fontSize: '3em', marginBottom: '20px', textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
+                    나를 위한 여행, TRAI
+                </h1>
+                <p style={{ fontSize: '1.2em', marginBottom: '30px' }}>
                     블로그 속 여행 경로를 분석하여, 나만을 위한 일정을 생성합니다.
                 </p>
-                <h1 style={{ fontSize: '3em', fontWeight: 'bold', margin: '0 0 30px 0' }}>
-                    여행 정보를 입력해 주세요
-                </h1>
-                
                 <input
-                    type="url"
-                    placeholder="분석할 블로그 글의 URL을 여기에 붙여넣어 주세요."
+                    type="text"
+                    placeholder="여행 블로그 URL을 입력하세요"
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
-                    style={{
-                        width: '800px', 
-                        padding: '15px 20px', 
-                        fontSize: '1.1em',
-                        border: '1px solid #ccc',
+                    style={{ 
+                        padding: '12px', 
+                        width: '400px', 
+                        maxWidth: '80%', 
+                        marginBottom: '20px', 
                         borderRadius: '4px',
-                        marginBottom: '20px',
-                        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                        border: 'none',
+                        fontSize: '1em'
                     }}
                 />
-                
                 <button 
                     style={{ 
                         padding: '15px 40px', 
@@ -251,7 +119,7 @@ function LoginSuccessPage() {
                     }}
                     onClick={handleGenerateSchedule}
                 >
-                    일정 생성
+                    AI 여행 추천 시작하기
                 </button>
             </div>
         </>
