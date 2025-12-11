@@ -1,4 +1,4 @@
-// src/pages/Option3Page.jsx (react-datepicker 최종 버전)
+// src/pages/Option3Page.jsx (react-datepicker 최종 버전 - 깃허브 오류 해결용)
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -7,7 +7,6 @@ import 'react-datepicker/dist/react-datepicker.css'; // DatePicker의 필수 CSS
 
 import LargeLogo from '../assets/logo1.jpg'; 
 
-// DatePicker 스타일 오버라이드를 위한 CSS (인라인 스타일)
 const datePickerContainerStyle = {
     display: 'flex', 
     justifyContent: 'center', 
@@ -20,6 +19,7 @@ const inputStyle = {
     padding: '10px',
     border: '1px solid #ccc',
     borderRadius: '4px',
+    boxSizing: 'border-box',
     fontSize: '1em',
     textAlign: 'center',
     cursor: 'pointer',
