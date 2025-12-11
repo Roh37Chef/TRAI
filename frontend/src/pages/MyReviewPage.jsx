@@ -127,7 +127,7 @@ const Header = ({ navigate }) => (
                 cursor: 'pointer'
             }}
         >
-            로그아웃
+            홈
         </button>
     </header>
 );
