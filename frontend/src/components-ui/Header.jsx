@@ -1,4 +1,4 @@
-// src/components-ui/Header.jsx (로고 크기 500px 적용)
+// src/components-ui/Header.jsx (로고 100px, 햄버거 메뉴 복구)
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -12,27 +12,33 @@ const styles = {
         alignItems: 'center',
         justifyContent: 'space-between',
         borderBottom: '1px solid #eee',
-        // 헤더 영역 높이도 로고 크기에 맞게 500px로 설정
-        height: '500px', 
+        // 헤더 영역 높이 100px로 복구
+        height: '100px', 
     },
     logo: {
-        // 👇 로고 크기 500px로 확대 👇
-        height: '500px', 
+        // 👇 로고 크기 100px로 재조정 👇
+        height: '100px', 
         cursor: 'pointer'
     },
-    button: {
-        background: 'none', 
+    menuButton: {
+        background: 'none',
+        border: 'none',
+        cursor: 'pointer',
+        fontSize: '28px', // 햄버거 아이콘 크기
+        padding: '5px',
+        color: '#333'
+    },
+    loginButton: {
         border: '1px solid #333',
         padding: '8px 15px',
         borderRadius: '4px',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        background: 'none',
     }
 };
 
 const Header = ({ showMenuButton = false, onMenuClick }) => {
     const navigate = useNavigate();
-    const buttonText = showMenuButton ? '메뉴 닫기' : '로그인';
-    const buttonPath = showMenuButton ? '/loginsuccess' : '/login';
 
     return (
         <header style={styles.header}>
@@ -42,18 +48,22 @@ const Header = ({ showMenuButton = false, onMenuClick }) => {
                 style={styles.logo} 
                 onClick={() => navigate('/loginsuccess')} 
             />
-            <button 
-                onClick={() => {
-                    if (onMenuClick) {
-                        onMenuClick(); 
-                    } else {
-                        navigate(buttonPath);
-                    }
-                }}
-                style={styles.button}
-            >
-                {buttonText}
-            </button>
+            {showMenuButton ? (
+                // 로그인 성공 후: 햄버거 메뉴 버튼
+                <button onClick={onMenuClick} style={styles.menuButton}>
+                    &#9776; {/* 햄버거 아이콘 */}
+                </button>
+            ) : (
+                // 로그인 전: 로그인/회원가입 버튼
+                <div>
+                    <button onClick={() => navigate('/login')} style={styles.loginButton}>
+                        Login
+                    </button>
+                    <button onClick={() => navigate('/signup')} style={{...styles.loginButton, marginLeft: '10px', backgroundColor: '#32CD32', color: 'white'}}>
+                        Sign up
+                    </button>
+                </div>
+            )}
         </header>
     );
 };
