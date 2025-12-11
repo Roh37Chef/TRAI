@@ -1,4 +1,4 @@
-// src/pages/Option3Page.jsx
+// src/pages/Option3Page.jsx (최종 - 디자인 달력 UI 유지 및 실행 가능 버전)
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -44,6 +44,7 @@ const Option3Page = () => {
             return;
         }
         
+        // Option 4를 건너뛰고 Option 6으로 이동하는 라우팅 유지
         navigate('/option6', { 
             state: { 
                 goingDate: goingDate.toISOString().split('T')[0], 
