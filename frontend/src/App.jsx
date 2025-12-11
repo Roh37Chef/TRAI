@@ -13,7 +13,7 @@ import Option1Page from './pages/Option1Page';
 import Option2Page from './pages/Option2Page';
 import Option3Page from './pages/Option3Page';
 import Option4Page from './pages/Option4Page';
-import Option5Page from './pages/Option5Page';
+// import Option5Page from './pages/Option5Page'; // ❌ Option5Page 제거
 import Option6Page from './pages/Option6Page';
 
 import LoadingPage from './pages/LoadingPage'; 
@@ -25,7 +25,6 @@ import WelfarePage from './pages/WelfarePage';
 function App() {
     return (
         <NavermapsProvider 
-            // 👇 고객님의 Client ID 적용 완료 👇
             clientId="nsna3qednt" 
             submodules={["panorama", "geocoder"]}
         >
@@ -41,7 +40,7 @@ function App() {
                     <Route path="/option2" element={<Option2Page />} />
                     <Route path="/option3" element={<Option3Page />} />
                     <Route path="/option4" element={<Option4Page />} />
-                    <Route path="/option5" element={<Option5Page />} />
+                    {/* <Route path="/option5" element={<Option5Page />} /> // ❌ 라우팅 제거 */}
                     <Route path="/option6" element={<Option6Page />} />
                     
                     <Route path="/loading" element={<LoadingPage />} />
