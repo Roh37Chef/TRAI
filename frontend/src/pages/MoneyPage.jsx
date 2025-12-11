@@ -1,9 +1,9 @@
-// src/pages/MoneyPage.jsx (최종 - 가계부 기능 및 캘린더 통합)
+// src/pages/MoneyPage.jsx (최종 - 디자인 복구 및 캘린더 기능 통합)
 
 import React, { useState } from 'react';
 import Header from '../components-ui/Header'; 
-import DatePicker from 'react-datepicker'; // 👈 DatePicker 추가
-import 'react-datepicker/dist/react-datepicker.css'; // DatePicker CSS 추가
+import DatePicker from 'react-datepicker'; 
+import 'react-datepicker/dist/react-datepicker.css'; 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUtensils, faHome, faCar, faShoppingCart, faCamera, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
@@ -19,21 +19,96 @@ const CATEGORIES = [
 ];
 
 const styles = {
-    // ... (기타 스타일 유지)
     container: {
         maxWidth: '1200px',
         margin: '50px auto',
         padding: '0 20px',
         display: 'flex',
         gap: '30px',
-        minHeight: 'calc(100vh - 100px)', // Header 높이 100px로 복구 가정
+        // 헤더 높이 100px 복구 가정
+        minHeight: 'calc(100vh - 100px)', 
     },
-    // ... (leftPanel, rightPanel, table, th, td, inputGroup, input, categoryGrid, categoryButton 유지)
+    leftPanel: {
+        flex: 2,
+        backgroundColor: '#fff',
+        padding: '30px',
+        borderRadius: '8px',
+        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+    },
+    rightPanel: {
+        flex: 1,
+        backgroundColor: '#fff',
+        padding: '30px',
+        borderRadius: '8px',
+        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+        textAlign: 'center',
+    },
+    table: {
+        width: '100%',
+        borderCollapse: 'collapse',
+        marginTop: '20px',
+        border: '1px solid #1B2C4F' // 테이블 외곽선 추가 (디자인 강조)
+    },
+    th: {
+        backgroundColor: '#1B2C4F',
+        color: 'white',
+        padding: '12px',
+        textAlign: 'left',
+        border: '1px solid #1B2C4F',
+    },
+    td: {
+        border: '1px solid #eee',
+        padding: '12px',
+        textAlign: 'left',
+    },
+    inputGroup: {
+        marginBottom: '20px',
+        marginTop: '20px',
+    },
+    input: {
+        width: '100%',
+        padding: '10px',
+        borderRadius: '4px',
+        border: '1px solid #ccc',
+        boxSizing: 'border-box',
+        marginBottom: '10px',
+        textAlign: 'right', 
+    },
+    // 👇 항목 버튼 3x2 그리드 스타일 (요청 반영) 👇
+    categoryGrid: {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3, 1fr)',
+        gap: '10px',
+        marginTop: '20px',
+    },
+    categoryButton: {
+        padding: '10px 5px',
+        border: '1px solid #ddd',
+        borderRadius: '6px',
+        backgroundColor: '#f9f9f9',
+        cursor: 'pointer',
+        fontSize: '0.9em',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '70px',
+        transition: 'background-color 0.2s',
+    },
+    // 캘린더 컨테이너 스타일
+    calendarContainer: {
+        display: 'inline-block', 
+        border: '1px solid #ddd', 
+        padding: '10px', 
+        borderRadius: '8px', 
+        marginBottom: '30px',
+        boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+    }
 };
 
 function MoneyPage() {
-    const [expenses, setExpenses] = useState([]); // 지출 목록 (테이블 데이터)
-    const [selectedDate, setSelectedDate] = useState(new Date()); // 👈 캘린더에서 선택된 날짜
+    const [expenses, setExpenses] = useState([]); 
+    const [selectedDate, setSelectedDate] = useState(new Date()); 
     
     const [currentExpense, setCurrentExpense] = useState({
         id: Date.now(),
@@ -44,14 +119,12 @@ function MoneyPage() {
     });
 
     // 총 지출액 계산
-    const totalAmount = expenses.reduce((sum, item) => sum + (parseInt(item.amount.replace(/,/g, '')) || 0), 0); // 포맷팅된 금액 처리
+    const totalAmount = expenses.reduce((sum, item) => sum + (parseInt(item.amount.replace(/,/g, '')) || 0), 0); 
 
-    // 날짜 변경 핸들러
     const handleDateChange = (date) => {
         setSelectedDate(date);
     };
 
-    // 항목 선택 핸들러
     const handleCategorySelect = (category) => {
         setCurrentExpense({
             ...currentExpense,
@@ -59,7 +132,6 @@ function MoneyPage() {
         });
     };
 
-    // 지출 내역/금액 입력 핸들러
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setCurrentExpense({
@@ -68,7 +140,6 @@ function MoneyPage() {
         });
     };
     
-    // 저장 버튼 핸들러
     const handleSave = () => {
         if (!currentExpense.description || !currentExpense.amount || !currentExpense.category) {
             alert("지출 내역, 금액, 항목을 모두 입력/선택해주세요.");
@@ -77,8 +148,8 @@ function MoneyPage() {
 
         const newExpense = {
             ...currentExpense,
-            date: selectedDate.toISOString().split('T')[0], // 👈 선택된 날짜 반영
-            amount: parseInt(currentExpense.amount).toLocaleString(), // 금액 포맷팅
+            date: selectedDate.toISOString().split('T')[0], 
+            amount: parseInt(currentExpense.amount).toLocaleString(),
             categoryName: currentExpense.category.name,
             id: Date.now(),
         };
@@ -93,12 +164,10 @@ function MoneyPage() {
             amount: '',
             memo: '',
         });
-        // 캘린더 날짜는 유지
     };
 
     return (
         <div style={{ minHeight: '100vh', backgroundColor: '#f4f4f4' }}>
-            {/* Header는 showMenuButton=true로 햄버거 메뉴를 가정합니다. */}
             <Header showMenuButton={true} /> 
             
             <div style={styles.container}>
@@ -125,6 +194,7 @@ function MoneyPage() {
                                     <td style={styles.td}>{item.memo}</td>
                                 </tr>
                             ))}
+                            {/* 테이블 내용이 비어있을 때의 플레이스홀더 */}
                             {expenses.length === 0 && (
                                 <tr>
                                     <td style={{...styles.td, color: '#aaa'}}>항목</td>
@@ -140,16 +210,16 @@ function MoneyPage() {
 
                 {/* 2. 오른쪽 패널: 입력 및 캘린더 */}
                 <div style={styles.rightPanel}>
-                    {/* 👇👇👇 캘린더 통합 영역 👇👇👇 */}
-                    <div style={{ display: 'inline-block', border: '1px solid #ddd', padding: '10px', borderRadius: '8px', marginBottom: '30px' }}>
+                    
+                    {/* 캘린더 통합 영역 */}
+                    <div style={styles.calendarContainer}>
                         <DatePicker
                             selected={selectedDate}
                             onChange={handleDateChange}
-                            inline // 캘린더를 항상 보이게 설정
+                            inline 
                             dateFormat="yyyy년 MM월 dd일"
                         />
                     </div>
-                    {/* 👆👆👆 캘린더 통합 영역 👆👆👆 */}
 
                     <h3 style={{ margin: '0 0 10px 0', fontSize: '1.5em', color: '#1B2C4F' }}>
                         총 지출액: {totalAmount.toLocaleString()}원
@@ -187,7 +257,7 @@ function MoneyPage() {
                     
                     <h4 style={{ margin: '20px 0 10px 0', color: '#333' }}>항목 선택: {currentExpense.category?.name || '선택 안 됨'}</h4>
                     
-                    {/* 항목 버튼 3x3 그리드 */}
+                    {/* 항목 버튼 3x2 그리드 */}
                     <div style={styles.categoryGrid}>
                         {CATEGORIES.map((cat) => (
                             <button
