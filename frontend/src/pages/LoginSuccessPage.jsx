@@ -1,4 +1,4 @@
-// src/pages/LoginSuccessPage.jsx (최종 메뉴 구현 버전)
+// src/pages/LoginSuccessPage.jsx (티켓 구매 항목 추가 최종 버전)
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -20,6 +20,22 @@ const backgroundStyle = {
     textShadow: '0 0 5px rgba(0,0,0,0.8)',
     backgroundColor: 'rgba(0,0,0,0.5)',
 };
+
+// 사이드바 메뉴 항목 정의
+const MENU_ITEMS = [
+    { name: '가계부', route: '/moneypage' },
+    { name: '여행후기', route: '/reviewpage' },
+    { name: '장애인 지원제도 안내', route: '/disabledpersonpage' },
+    { name: '티켓 구매', route: '/ticketpage' }, // ✅ 새로 추가된 항목
+    {
+        name: '마이페이지',
+        subItems: [
+            { name: '여행 계획', route: '/myplanpage' },
+            { name: '리뷰', route: '/myreviewpage' },
+        ],
+    },
+];
+
 
 // 햄버거 메뉴를 위한 Sidebar 컴포넌트
 const Sidebar = ({ isOpen, onClose, navigate }) => {
@@ -103,33 +119,38 @@ const Sidebar = ({ isOpen, onClose, navigate }) => {
                     &times;
                 </button>
 
-                {/* 메뉴 항목들 */}
-                <button style={menuButtonStyle} onClick={() => handleNavigation('/moneypage')}>
-                    가계부
-                </button>
-                <button style={menuButtonStyle} onClick={() => handleNavigation('/reviewpage')}>
-                    여행 후기
-                </button>
-                <button style={menuButtonStyle} onClick={() => handleNavigation('/disabledpersonpage')}>
-                    장애인 지원제도 안내
-                </button>
-                
-                <button style={menuButtonStyle} onClick={handleMyPageClick}>
-                    마이페이지 {isMyPageOpen ? '▲' : '▼'}
-                </button>
-                
-                {isMyPageOpen && (
-                    <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        <button style={submenuButtonStyle} onClick={() => handleNavigation('/myplanpage')}>
-                            여행 계획
+                {/* 메뉴 항목들 렌더링 */}
+                {MENU_ITEMS.map((item, index) => {
+                    if (item.subItems) {
+                        return (
+                            <React.Fragment key={index}>
+                                <button style={menuButtonStyle} onClick={handleMyPageClick}>
+                                    {item.name} {isMyPageOpen ? '▲' : '▼'}
+                                </button>
+                                {isMyPageOpen && (
+                                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                        {item.subItems.map(subItem => (
+                                            <button key={subItem.name} style={submenuButtonStyle} onClick={() => handleNavigation(subItem.route)}>
+                                                {subItem.name}
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+                            </React.Fragment>
+                        );
+                    }
+                    return (
+                        <button key={index} style={menuButtonStyle} onClick={() => handleNavigation(item.route)}>
+                            {item.name}
                         </button>
-                        <button style={submenuButtonStyle} onClick={() => handleNavigation('/myreviewpage')}>
-                            리뷰
-                        </button>
-                    </div>
-                )}
+                    );
+                })}
                 
-                <button style={{...menuButtonStyle, marginTop: 'auto', borderTop: '1px solid #eee'}} onClick={() => handleNavigation('/login')}>
+                {/* 로그아웃 버튼 (하단 고정) */}
+                <button 
+                    style={{...menuButtonStyle, marginTop: 'auto', borderTop: '1px solid #eee'}} 
+                    onClick={() => handleNavigation('/login')}
+                >
                     로그아웃
                 </button>
 
