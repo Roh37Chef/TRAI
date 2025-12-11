@@ -127,7 +127,7 @@ const Header = ({ navigate }) => (
                 cursor: 'pointer'
             }}
         >
-            홈
+            메뉴 닫기
         </button>
     </header>
 );
