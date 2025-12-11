@@ -1,112 +1,74 @@
-// src/pages/LoginPage.jsx
+// src/pages/LoginPage.jsx (최종 - Header 사용 및 경로 수정)
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from '../components-ui/Header'; 
-
-const styles = {
-    container: {
-        maxWidth: '400px',
-        margin: '100px auto', 
-        textAlign: 'center',
-        padding: '20px',
-    },
-    input: {
-        width: '100%',
-        padding: '12px 15px',
-        margin: '8px 0',
-        border: '1px solid #ccc',
-        borderRadius: '4px',
-        boxSizing: 'border-box',
-    },
-    buttonPrimary: {
-        width: '100%',
-        padding: '12px 15px',
-        backgroundColor: '#333', 
-        color: 'white',
-        border: 'none',
-        borderRadius: '4px',
-        cursor: 'pointer',
-        marginTop: '20px',
-        fontSize: '1em',
-        fontWeight: 'bold',
-    },
-    linkButton: {
-        color: '#666',
-        textDecoration: 'none', 
-        cursor: 'pointer',
-        fontSize: '0.9em',
-    },
-    forgotPassword: {
-        fontSize: '0.9em',
-        color: '#666',
-        cursor: 'pointer',
-        textAlign: 'left'
-    }
-};
+import Header from '../components-ui/Header'; // 👈 경로 수정
 
 function LoginPage() {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate();
 
-    const handleLogin = (e) => {
-        e.preventDefault();
-        
-        const storedUser = JSON.parse(localStorage.getItem('user'));
-        
-        if (storedUser && storedUser.email === email && storedUser.password === password) {
-            alert('로그인 성공! AI 추천 페이지로 이동합니다.');
-            navigate('/loginsuccess'); // 최종 확인: /loginsuccess로 이동
+    const handleLogin = () => {
+        // 실제 로그인 로직 (현재는 임시로 /loginsuccess로 이동)
+        if (email && password) {
+            navigate('/loginsuccess');
         } else {
-            alert('로그인 정보가 일치하지 않거나 회원가입이 필요합니다.');
+            alert('이메일과 비밀번호를 입력해주세요.');
         }
     };
-
+    
     return (
-        <>
+        <div style={{ minHeight: '100vh', backgroundColor: '#f4f4f4' }}>
             <Header /> 
-            <div style={styles.container}>
-                <h1 style={{ fontWeight: 800, marginBottom: '40px', fontSize: '2.5em' }}>LOGIN</h1>
+            <div style={{ 
+                maxWidth: '400px', 
+                margin: '50px auto', 
+                padding: '30px', 
+                backgroundColor: '#fff', 
+                borderRadius: '8px', 
+                boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+                textAlign: 'center'
+            }}>
+                <h1 style={{ fontSize: '2.5em', color: '#1B2C4F', marginBottom: '30px' }}>로그인</h1>
+                
+                <input
+                    type="email"
+                    placeholder="이메일"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    style={{ padding: '10px', width: '100%', marginBottom: '15px', borderRadius: '4px', border: '1px solid #ccc' }}
+                />
+                <input
+                    type="password"
+                    placeholder="비밀번호"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    style={{ padding: '10px', width: '100%', marginBottom: '25px', borderRadius: '4px', border: '1px solid #ccc' }}
+                />
 
-                <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column' }}>
-                    
-                    <input 
-                        type="email" 
-                        placeholder="Email" 
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        style={styles.input} 
-                    />
-                    
-                    <input 
-                        type="password" 
-                        placeholder="Password" 
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        style={styles.input} 
-                    />
-                    
-                    <button type="submit" style={styles.buttonPrimary}>
-                        Sign In
-                    </button>
-                </form>
+                <button
+                    onClick={handleLogin}
+                    style={{
+                        padding: '12px 0',
+                        width: '100%',
+                        backgroundColor: '#1B2C4F',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        fontSize: '1.1em',
+                        marginBottom: '10px'
+                    }}
+                >
+                    로그인
+                </button>
 
-                <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    
-                    <span style={styles.forgotPassword}>
-                        Forgot password?
-                    </span>
-                    
-                    <span 
-                        style={styles.linkButton} 
-                        onClick={() => navigate('/signup')} 
-                    >
-                        Sign up
-                    </span>
-                </div>
+                <p style={{ fontSize: '0.9em', color: '#666' }}>
+                    계정이 없으신가요? <span onClick={() => navigate('/signup')} style={{ color: '#1B2C4F', cursor: 'pointer', fontWeight: 'bold' }}>회원가입</span>
+                </p>
             </div>
-        </>
+        </div>
     );
 }
 
