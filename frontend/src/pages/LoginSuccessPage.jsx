@@ -1,4 +1,4 @@
-// src/pages/LoginSuccessPage.jsx (최종 - 햄버거 메뉴 작동 복구 및 UI 정리)
+// src/pages/LoginSuccessPage.jsx (최종 - URL 입력 및 버튼 복구)
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +11,7 @@ const backgroundStyle = {
     backgroundImage: `url(${MainBackgroundImage})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    height: 'calc(100vh - 100px)', // 헤더 높이 100px에 맞춰 조정
+    height: 'calc(100vh - 100px)', 
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -71,7 +71,6 @@ const Sidebar = ({ isOpen, onClose, navigate }) => {
             transition: 'transform 0.3s ease-in-out',
             zIndex: 1000,
             padding: '20px',
-            // 햄버거 팝업이 열릴 때 헤더 위에 오도록 Z-Index를 높여줍니다.
         }}>
             <h3 style={{ borderBottom: '1px solid #eee', paddingBottom: '10px' }}>메뉴</h3>
             <ul>
@@ -147,7 +146,40 @@ function LoginSuccessPage() {
                 <p style={{ fontSize: '1.2em', marginBottom: '30px' }}>
                     블로그 속 여행 경로를 분석하여, 나만을 위한 일정을 생성합니다.
                 </p>
-                {/* ... (나머지 입력 필드와 버튼 JSX 유지) */}
+                
+                {/* 👇👇👇 복구된 URL 입력 필드 👇👇👇 */}
+                <input
+                    type="text"
+                    placeholder="여행 블로그 URL을 입력하세요"
+                    value={url}
+                    onChange={(e) => setUrl(e.target.value)}
+                    style={{ 
+                        padding: '12px', 
+                        width: '400px', 
+                        maxWidth: '80%', 
+                        marginBottom: '20px', 
+                        borderRadius: '4px',
+                        border: 'none',
+                        fontSize: '1em'
+                    }}
+                />
+                
+                {/* 👇👇👇 복구된 일정 생성 버튼 👇👇👇 */}
+                <button 
+                    style={{ 
+                        padding: '15px 40px', 
+                        backgroundColor: '#1B2C4F', 
+                        color: 'white', 
+                        border: 'none', 
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        fontSize: '1.2em',
+                        fontWeight: 'bold'
+                    }}
+                    onClick={handleGenerateSchedule}
+                >
+                    AI 여행 추천 시작하기
+                </button>
             </div>
         </>
     );
