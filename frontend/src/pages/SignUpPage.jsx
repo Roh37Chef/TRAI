@@ -1,114 +1,87 @@
-// src/pages/SignUpPage.jsx
+// src/pages/SignUpPage.jsx (최종 - Header 사용 및 경로 수정)
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from '../components-ui/Header'; 
-
-const styles = {
-    container: {
-        maxWidth: '400px',
-        margin: '100px auto', 
-        textAlign: 'center',
-        padding: '20px',
-    },
-    input: {
-        width: '100%',
-        padding: '12px 15px',
-        margin: '8px 0',
-        border: '1px solid #ccc',
-        borderRadius: '4px',
-        boxSizing: 'border-box',
-    },
-    buttonPrimary: {
-        width: '100%',
-        padding: '12px 15px',
-        backgroundColor: '#333', 
-        color: 'white',
-        border: 'none',
-        borderRadius: '4px',
-        cursor: 'pointer',
-        marginTop: '20px',
-        fontSize: '1em',
-        fontWeight: 'bold',
-    },
-    linkButton: {
-        color: '#666',
-        textDecoration: 'none',
-        cursor: 'pointer',
-        fontSize: '0.9em',
-    },
-};
+import Header from '../components-ui/Header'; // 👈 경로 수정
 
 function SignUpPage() {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const navigate = useNavigate();
 
-    const handleSignUp = (e) => {
-        e.preventDefault();
-        
+    const handleSignUp = () => {
         if (password !== confirmPassword) {
             alert('비밀번호가 일치하지 않습니다.');
             return;
         }
-
-        localStorage.setItem('user', JSON.stringify({ email, password }));
-        
-        alert('회원가입 성공! 로그인 페이지로 이동합니다.');
-        navigate('/login'); 
+        // 실제 회원가입 로직 (현재는 임시로 /login으로 이동)
+        if (email && password) {
+            alert('회원가입 성공!');
+            navigate('/login');
+        } else {
+            alert('모든 정보를 입력해주세요.');
+        }
     };
-
+    
     return (
-        <>
-            <Header />
-            <div style={styles.container}>
-                <h1 style={{ fontWeight: 800, marginBottom: '40px', fontSize: '2.5em' }}>SIGN UP</h1>
-
-                <form onSubmit={handleSignUp} style={{ display: 'flex', flexDirection: 'column' }}>
-                    
-                    <input 
-                        type="email" 
-                        placeholder="Email" 
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        style={styles.input} 
-                        required
-                    />
-                    
-                    <input 
-                        type="password" 
-                        placeholder="Password" 
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        style={styles.input} 
-                        required
-                    />
-
-                    <input 
-                        type="password" 
-                        placeholder="Confirm Password" 
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        style={styles.input} 
-                        required
-                    />
-                    
-                    <button type="submit" style={styles.buttonPrimary}>
-                        Sign Up
-                    </button>
-                </form>
+        <div style={{ minHeight: '100vh', backgroundColor: '#f4f4f4' }}>
+            <Header /> 
+            <div style={{ 
+                maxWidth: '400px', 
+                margin: '50px auto', 
+                padding: '30px', 
+                backgroundColor: '#fff', 
+                borderRadius: '8px', 
+                boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+                textAlign: 'center'
+            }}>
+                <h1 style={{ fontSize: '2.5em', color: '#1B2C4F', marginBottom: '30px' }}>회원가입</h1>
                 
-                <div style={{ marginTop: '20px', textAlign: 'right' }}>
-                    <span 
-                        style={styles.linkButton} 
-                        onClick={() => navigate('/login')}
-                    >
-                        Sign In
-                    </span>
-                </div>
+                <input
+                    type="email"
+                    placeholder="이메일"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    style={{ padding: '10px', width: '100%', marginBottom: '15px', borderRadius: '4px', border: '1px solid #ccc' }}
+                />
+                <input
+                    type="password"
+                    placeholder="비밀번호"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    style={{ padding: '10px', width: '100%', marginBottom: '15px', borderRadius: '4px', border: '1px solid #ccc' }}
+                />
+                <input
+                    type="password"
+                    placeholder="비밀번호 확인"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    style={{ padding: '10px', width: '100%', marginBottom: '25px', borderRadius: '4px', border: '1px solid #ccc' }}
+                />
+
+                <button
+                    onClick={handleSignUp}
+                    style={{
+                        padding: '12px 0',
+                        width: '100%',
+                        backgroundColor: '#32CD32', // 회원가입은 다른 색상
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        fontSize: '1.1em',
+                        marginBottom: '10px'
+                    }}
+                >
+                    회원가입
+                </button>
+
+                <p style={{ fontSize: '0.9em', color: '#666' }}>
+                    이미 계정이 있으신가요? <span onClick={() => navigate('/login')} style={{ color: '#1B2C4F', cursor: 'pointer', fontWeight: 'bold' }}>로그인</span>
+                </p>
             </div>
-        </>
+        </div>
     );
 }
 
