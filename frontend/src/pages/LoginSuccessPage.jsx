@@ -1,19 +1,52 @@
-// src/pages/LoginSuccessPage.jsx (최종 - 사이드바 메뉴 복구)
+// src/pages/LoginSuccessPage.jsx (최종 - 햄버거 메뉴 작동 복구 및 UI 정리)
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from '../components-ui/Header'; // 👈 경로 수정
-
+// Header 대신 필요한 부분만 사용
 import TraiLogoFull from '../assets/logo2.jpg'; 
 import MainBackgroundImage from '../assets/background.jpg'; 
 
 const backgroundStyle = {
-    // ... (배경 스타일 유지)
+    // 배경 스타일 유지
+    backgroundImage: `url(${MainBackgroundImage})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
     height: 'calc(100vh - 100px)', // 헤더 높이 100px에 맞춰 조정
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: 'white',
+    textAlign: 'center',
+    padding: '0 20px',
 };
 
+const HeaderStyle = {
+    padding: '20px 40px', 
+    backgroundColor: 'white',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderBottom: '1px solid #eee',
+    height: '100px',
+};
+
+const LogoStyle = {
+    height: '100px', // 로고 크기 100px
+    cursor: 'pointer'
+};
+
+const MenuButtonStyle = {
+    background: 'none',
+    border: 'none',
+    cursor: 'pointer',
+    fontSize: '28px', // 햄버거 아이콘 크기
+    padding: '5px',
+    color: '#333'
+};
+
+
 const MENU_ITEMS = [
-    // 👇 마이페이지 항목 복구 및 포함
     { name: '마이페이지', submenu: [
         { name: '여행 계획', path: '/myplanpage' },
         { name: '리뷰', path: '/myreviewpage' },
@@ -27,12 +60,22 @@ const MENU_ITEMS = [
 const Sidebar = ({ isOpen, onClose, navigate }) => {
     return (
         <div style={{
-            // ... (사이드바 스타일 유지)
+            position: 'fixed',
+            top: 0,
+            right: 0,
+            width: '300px',
+            height: '100%',
+            backgroundColor: 'white',
+            boxShadow: '0 0 10px rgba(0,0,0,0.5)',
+            transform: isOpen ? 'translateX(0)' : 'translateX(100%)',
+            transition: 'transform 0.3s ease-in-out',
+            zIndex: 1000,
+            padding: '20px',
+            // 햄버거 팝업이 열릴 때 헤더 위에 오도록 Z-Index를 높여줍니다.
         }}>
             <h3 style={{ borderBottom: '1px solid #eee', paddingBottom: '10px' }}>메뉴</h3>
             <ul>
                 {MENU_ITEMS.map(item => (
-                    // 일반 메뉴 또는 서브메뉴가 있는 마이페이지 메뉴 처리
                     <React.Fragment key={item.name}>
                         <li style={{ listStyle: 'none', padding: '15px 0', borderBottom: '1px dotted #eee', cursor: 'pointer', fontWeight: item.submenu ? 'bold' : 'normal' }}
                             onClick={() => {
@@ -64,7 +107,6 @@ const Sidebar = ({ isOpen, onClose, navigate }) => {
 
 
 function LoginSuccessPage() {
-    // ... (나머지 로직 유지)
     const navigate = useNavigate();
     const [url, setUrl] = useState('');
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -79,17 +121,33 @@ function LoginSuccessPage() {
         navigate('/option1', { state: { url } });
     };
 
-
     return (
         <>
-            {/* Header 컴포넌트로 대체 및 햄버거 메뉴 기능 연결 */}
-            {/* showMenuButton={true}로 햄버거 아이콘 표시 */}
-            <Header showMenuButton={true} onMenuClick={toggleSidebar} /> 
-            
+            {/* LoginSuccessPage 전용 헤더 (로고와 햄버거 아이콘) */}
+            <header style={HeaderStyle}>
+                <img 
+                    src={TraiLogoFull}
+                    alt="TRAI Logo" 
+                    style={LogoStyle} 
+                    onClick={() => navigate('/loginsuccess')} 
+                />
+                <button onClick={toggleSidebar} style={MenuButtonStyle}>
+                    &#9776; {/* 햄버거 아이콘 */}
+                </button>
+            </header>
+
+
+            {/* 햄버거 메뉴 클릭 시 나타나는 사이드바 */}
             <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} navigate={navigate} />
 
             <div style={backgroundStyle}>
-                {/* ... (나머지 JSX 유지) */}
+                <h1 style={{ fontSize: '3em', marginBottom: '20px', textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
+                    나를 위한 여행, TRAI
+                </h1>
+                <p style={{ fontSize: '1.2em', marginBottom: '30px' }}>
+                    블로그 속 여행 경로를 분석하여, 나만을 위한 일정을 생성합니다.
+                </p>
+                {/* ... (나머지 입력 필드와 버튼 JSX 유지) */}
             </div>
         </>
     );
