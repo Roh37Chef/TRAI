@@ -1,4 +1,4 @@
-// src/pages/Option4Page.jsx
+// src/pages/Option4Page.jsx (수정 완료)
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -15,7 +15,8 @@ const Option4Page = () => {
             alert("차량 이용 여부를 선택해주세요.");
             return;
         }
-        navigate('/option5', { state: { useCar: useCar } });
+        // 👇 경로를 /option6로 변경합니다. 👇
+        navigate('/option6', { state: { useCar: useCar } });
     };
 
     const isButtonSelected = (option) => useCar === option;
