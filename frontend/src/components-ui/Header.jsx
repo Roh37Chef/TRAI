@@ -1,4 +1,4 @@
-// src/components-ui/Header.jsx (로고 확대 100px 적용)
+// src/components-ui/Header.jsx (로고 크기 500px 적용)
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -12,11 +12,12 @@ const styles = {
         alignItems: 'center',
         justifyContent: 'space-between',
         borderBottom: '1px solid #eee',
-        height: '100px', 
+        // 헤더 영역 높이도 로고 크기에 맞게 500px로 설정
+        height: '500px', 
     },
     logo: {
-        // 👇 로고 크기 100px로 최종 확대 👇
-        height: '100px', 
+        // 👇 로고 크기 500px로 확대 👇
+        height: '500px', 
         cursor: 'pointer'
     },
     button: {
@@ -28,7 +29,6 @@ const styles = {
     }
 };
 
-// 기본 헤더 컴포넌트 (로그아웃 버튼 기능 포함)
 const Header = ({ showMenuButton = false, onMenuClick }) => {
     const navigate = useNavigate();
     const buttonText = showMenuButton ? '메뉴 닫기' : '로그인';
@@ -45,7 +45,7 @@ const Header = ({ showMenuButton = false, onMenuClick }) => {
             <button 
                 onClick={() => {
                     if (onMenuClick) {
-                        onMenuClick(); // 햄버거 메뉴를 위한 클릭 핸들러
+                        onMenuClick(); 
                     } else {
                         navigate(buttonPath);
                     }
