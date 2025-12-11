@@ -1,244 +1,162 @@
-// src/pages/MoneyPage.jsx (고객님 UI 요청 반영 최종 버전)
+// src/pages/MoneyPage.jsx (최종 - 가계부 기능 구현 및 UI 수정)
 
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import TraiLogo from '../assets/logo2.jpg'; 
+import React, { useState } from 'react';
+import Header from '../components-ui/Header'; 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUtensils, faHome, faCar, faShoppingCart, faCamera, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
+
+// 항목 정의 및 아이콘 매핑
+const CATEGORIES = [
+    { name: '식비', icon: faUtensils, color: '#4CAF50' },
+    { name: '숙박', icon: faHome, color: '#2196F3' },
+    { name: '교통', icon: faCar, color: '#FF9800' },
+    { name: '쇼핑', icon: faShoppingCart, color: '#E91E63' },
+    { name: '관광', icon: faCamera, color: '#673AB7' },
+    { name: '기타', icon: faEllipsisH, color: '#607D8B' },
+];
 
 const styles = {
-    header: {
-        padding: '20px 40px', 
-        backgroundColor: 'white',
+    // ... (기타 스타일 생략)
+    container: {
+        maxWidth: '1200px',
+        margin: '50px auto',
+        padding: '0 20px',
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        borderBottom: '1px solid #eee'
+        gap: '30px',
+        minHeight: 'calc(100vh - 500px)', // 헤더 높이(500px) 고려
     },
-    mainContainer: {
-        display: 'flex',
-        minHeight: 'calc(100vh - 81px)', // 헤더 높이 제외
-        backgroundColor: '#f4f4f4'
-    },
-    // 왼쪽 테이블 영역
     leftPanel: {
         flex: 2,
+        backgroundColor: '#fff',
         padding: '30px',
-        backgroundColor: 'white',
-        borderRight: '1px solid #eee'
+        borderRadius: '8px',
+        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
     },
-    // 오른쪽 입력/도구 영역
     rightPanel: {
         flex: 1,
+        backgroundColor: '#fff',
         padding: '30px',
-        backgroundColor: '#f9f9f9',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+        borderRadius: '8px',
+        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+        textAlign: 'center',
     },
     table: {
         width: '100%',
         borderCollapse: 'collapse',
-        border: '1px solid #ccc',
-        marginTop: '20px'
+        marginTop: '20px',
     },
     th: {
         backgroundColor: '#1B2C4F',
         color: 'white',
-        padding: '12px 8px',
-        textAlign: 'center',
-        border: '1px solid #ccc'
+        padding: '12px',
+        textAlign: 'left',
     },
     td: {
-        padding: '8px',
-        border: '1px solid #ccc',
-        textAlign: 'center',
-        fontSize: '0.95em'
+        borderBottom: '1px solid #eee',
+        padding: '12px',
+        textAlign: 'left',
+    },
+    inputGroup: {
+        marginBottom: '20px',
     },
     input: {
         width: '100%',
-        padding: '5px',
-        border: 'none',
-        textAlign: 'center',
-        boxSizing: 'border-box'
+        padding: '10px',
+        borderRadius: '4px',
+        border: '1px solid #ccc',
+        boxSizing: 'border-box',
+        marginBottom: '10px',
+        textAlign: 'right', // 금액 입력 오른쪽 정렬
     },
-    categoryIcon: {
-        width: '80px',
-        height: '80px',
-        borderRadius: '10px',
-        backgroundColor: '#fff',
-        margin: '10px',
+    // 👇 항목 버튼 3x2 그리드 스타일 👇
+    categoryGrid: {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3, 1fr)',
+        gap: '10px',
+        marginTop: '20px',
+    },
+    categoryButton: {
+        padding: '10px 5px',
+        border: '1px solid #ddd',
+        borderRadius: '6px',
+        backgroundColor: '#f9f9f9',
+        cursor: 'pointer',
+        fontSize: '0.9em',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
         alignItems: 'center',
-        boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-        cursor: 'pointer',
+        justifyContent: 'center',
+        height: '70px',
         transition: 'background-color 0.2s',
-        fontSize: '0.9em'
-    }
+    },
 };
 
-const CATEGORIES = [
-    { name: '식비', icon: '🍽️' },
-    { name: '숙박', icon: '🏠' },
-    { name: '교통', icon: '🚗' },
-    { name: '쇼핑', icon: '🛒' },
-    { name: '관광', icon: '📸' },
-    { name: '기타', icon: '•••' }
-];
-
-const Header = ({ navigate }) => (
-    <header style={styles.header}>
-        <img 
-            src={TraiLogo}
-            alt="TRAI Logo" 
-            style={{ height: '40px', cursor: 'pointer' }} 
-            onClick={() => navigate('/loginsuccess')} 
-        />
-        <button 
-            onClick={() => navigate('/loginsuccess')}
-            style={{ 
-                background: 'none', 
-                border: '1px solid #333',
-                padding: '8px 15px',
-                borderRadius: '4px',
-                cursor: 'pointer'
-            }}
-        >
-            메뉴 닫기
-        </button>
-    </header>
-);
-
 function MoneyPage() {
-    const navigate = useNavigate();
-    const [expenses, setExpenses] = useState([]); // 저장된 지출 목록
-    const [currentExpense, setCurrentExpense] = useState({ // 현재 입력 중인 지출
-        date: '',
-        category: '',
-        description: '',
-        amount: '',
-        memo: ''
+    const [expenses, setExpenses] = useState([]); // 지출 목록 (테이블 데이터)
+    const [currentExpense, setCurrentExpense] = useState({
+        id: Date.now(),
+        date: new Date().toISOString().split('T')[0],
+        category: null, // 선택된 항목 객체
+        description: '', // 지출 내역
+        amount: '', // 금액 (문자열)
+        memo: '', // 비고
     });
-    const [currentDate, setCurrentDate] = useState(new Date());
 
     // 총 지출액 계산
-    const totalAmount = expenses.reduce((sum, exp) => sum + Number(exp.amount), 0);
+    const totalAmount = expenses.reduce((sum, item) => sum + (parseInt(item.amount) || 0), 0);
 
-    // 달력 날짜 변경 핸들러
-    const handleDateChange = (date) => {
-        setCurrentDate(date);
-        const formattedDate = date.toISOString().split('T')[0];
-        setCurrentExpense(prev => ({ ...prev, date: formattedDate }));
-    };
-
-    // 카테고리 버튼 클릭 핸들러
-    const handleCategorySelect = (categoryName) => {
-        setCurrentExpense(prev => ({ ...prev, category: categoryName }));
-    };
-
-    // 저장 버튼 클릭 핸들러 (테이블에 새 행 추가)
-    const handleSave = () => {
-        const { date, category, description, amount } = currentExpense;
-        
-        if (!date || !category || !description || !amount) {
-            alert('날짜, 항목, 내용, 금액을 모두 입력하거나 선택해주세요.');
-            return;
-        }
-
-        const newExpenseItem = {
-            id: Date.now(),
-            ...currentExpense,
-        };
-
-        setExpenses(prev => [...prev, newExpenseItem]);
-        
-        // 입력 필드 초기화
+    // 항목 선택 핸들러
+    const handleCategorySelect = (category) => {
         setCurrentExpense({
-            date: '', // 날짜는 달력 선택으로 초기화 안함
-            category: '',
-            description: '',
-            amount: '',
-            memo: ''
+            ...currentExpense,
+            category: category,
         });
     };
 
-    // 캘린더 UI (고객님의 이미지와 유사하게 재현)
-    const renderCalendar = () => {
-        // 간단한 월별 캘린더 UI (실제 라이브러리 UI는 복잡하여 수동 구현)
-        const year = currentDate.getFullYear();
-        const month = currentDate.getMonth();
-        const firstDay = new Date(year, month, 1).getDay();
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
-        const startEmptyCells = firstDay;
-        
-        let days = [];
-        for (let i = 0; i < startEmptyCells; i++) days.push(null);
-        for (let i = 1; i <= daysInMonth; i++) days.push(i);
+    // 지출 내역/금액 입력 핸들러
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setCurrentExpense({
+            ...currentExpense,
+            [name]: value,
+        });
+    };
+    
+    // 저장 버튼 핸들러
+    const handleSave = () => {
+        if (!currentExpense.description || !currentExpense.amount || !currentExpense.category) {
+            alert("지출 내역, 금액, 항목을 모두 입력/선택해주세요.");
+            return;
+        }
 
-        const today = new Date();
-        const isSelected = (day) => {
-            if (!currentExpense.date) return false;
-            const expenseDate = new Date(currentExpense.date);
-            return expenseDate.getDate() === day && expenseDate.getMonth() === month && expenseDate.getFullYear() === year;
-        };
-        
-        const renderDay = (day) => {
-            if (day === null) return <div style={{ width: '14%', padding: '5px' }}></div>;
-            
-            const isToday = day === today.getDate() && month === today.getMonth() && year === today.getFullYear();
-            
-            return (
-                <div 
-                    key={day}
-                    style={{
-                        width: '14%',
-                        padding: '5px',
-                        textAlign: 'center',
-                        cursor: 'pointer',
-                        backgroundColor: isSelected(day) ? '#32CD32' : (isToday ? '#eee' : 'transparent'),
-                        color: isSelected(day) ? 'white' : 'black',
-                        borderRadius: '5px'
-                    }}
-                    onClick={() => handleDateChange(new Date(year, month, day))}
-                >
-                    {day}
-                </div>
-            );
+        const newExpense = {
+            ...currentExpense,
+            amount: parseInt(currentExpense.amount).toLocaleString(), // 금액 포맷팅
+            categoryName: currentExpense.category.name,
+            id: Date.now(),
         };
 
-        return (
-            <div style={{ width: '100%', marginBottom: '20px', border: '1px solid #ccc', padding: '10px', borderRadius: '5px' }}>
-                {/* 월 네비게이션 */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                    <button onClick={() => setCurrentDate(new Date(year, month - 1, 1))} style={{ border: 'none', background: 'none', cursor: 'pointer' }}>&lt;</button>
-                    <h4 style={{ margin: '0' }}>{year}년 {month + 1}월</h4>
-                    <button onClick={() => setCurrentDate(new Date(year, month + 1, 1))} style={{ border: 'none', background: 'none', cursor: 'pointer' }}>&gt;</button>
-                </div>
-                
-                {/* 요일 헤더 */}
-                <div style={{ display: 'flex', flexWrap: 'wrap', fontWeight: 'bold' }}>
-                    {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map(day => (
-                        <div key={day} style={{ width: '14%', textAlign: 'center', padding: '5px', color: (day === 'Su' || day === 'Sa') ? 'red' : 'inherit' }}>{day}</div>
-                    ))}
-                </div>
-                
-                {/* 날짜 */}
-                <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                    {days.map(renderDay)}
-                </div>
-            </div>
-        );
+        setExpenses([...expenses, newExpense]);
+        
+        // 입력 필드 초기화
+        setCurrentExpense({
+            id: Date.now(),
+            date: new Date().toISOString().split('T')[0],
+            category: null,
+            description: '',
+            amount: '',
+            memo: '',
+        });
     };
 
-
     return (
-        <>
-            <Header navigate={navigate} />
-            <div style={styles.mainContainer}>
-                {/* 왼: 지출 내역 테이블 */}
+        <div style={{ minHeight: '100vh', backgroundColor: '#f4f4f4' }}>
+            <Header showMenuButton={true} /> 
+            
+            <div style={styles.container}>
+                {/* 1. 왼쪽 패널: 지출 내역 테이블 */}
                 <div style={styles.leftPanel}>
-                    <h2 style={{ color: '#1B2C4F', marginBottom: '20px' }}>지출 내역</h2>
-                    
+                    <h1 style={{ fontSize: '2em', color: '#1B2C4F', marginBottom: '20px', textAlign: 'left' }}>지출 내역</h1>
                     <table style={styles.table}>
                         <thead>
                             <tr>
@@ -250,126 +168,112 @@ function MoneyPage() {
                             </tr>
                         </thead>
                         <tbody>
-                            {/* 현재 입력 행 */}
-                            <tr>
-                                <td style={styles.td}>
-                                    <input 
-                                        type="text" 
-                                        value={currentExpense.category} 
-                                        onChange={(e) => setCurrentExpense(prev => ({...prev, category: e.target.value}))}
-                                        style={styles.input} 
-                                        placeholder="교통/식비 등"
-                                    />
-                                </td>
-                                <td style={styles.td}>
-                                    <input 
-                                        type="text" 
-                                        value={currentExpense.date} 
-                                        style={styles.input}
-                                        readOnly
-                                        placeholder="달력 선택"
-                                    />
-                                </td>
-                                <td style={styles.td}>
-                                    <input 
-                                        type="text" 
-                                        value={currentExpense.description} 
-                                        onChange={(e) => setCurrentExpense(prev => ({...prev, description: e.target.value}))}
-                                        style={styles.input} 
-                                        placeholder="예: KTX 탑승권"
-                                    />
-                                </td>
-                                <td style={styles.td}>
-                                    <input 
-                                        type="number" 
-                                        value={currentExpense.amount} 
-                                        onChange={(e) => setCurrentExpense(prev => ({...prev, amount: e.target.value}))}
-                                        style={styles.input} 
-                                        placeholder="금액"
-                                    />
-                                </td>
-                                <td style={styles.td}>
-                                    <input 
-                                        type="text" 
-                                        value={currentExpense.memo} 
-                                        onChange={(e) => setCurrentExpense(prev => ({...prev, memo: e.target.value}))}
-                                        style={styles.input} 
-                                        placeholder="메모"
-                                    />
-                                </td>
-                            </tr>
-
-                            {/* 저장된 지출 내역 행 */}
-                            {expenses.map(exp => (
-                                <tr key={exp.id} style={{ backgroundColor: '#fdfdfd' }}>
-                                    <td style={styles.td}>{exp.category}</td>
-                                    <td style={styles.td}>{exp.date}</td>
-                                    <td style={styles.td}>{exp.description}</td>
-                                    <td style={{...styles.td, fontWeight: 'bold', color: 'red'}}>
-                                        {Number(exp.amount).toLocaleString()}원
-                                    </td>
-                                    <td style={styles.td}>{exp.memo}</td>
+                            {expenses.map((item) => (
+                                <tr key={item.id}>
+                                    <td style={styles.td}>{item.categoryName}</td>
+                                    <td style={styles.td}>{item.date}</td>
+                                    <td style={styles.td}>{item.description}</td>
+                                    <td style={styles.td}>{item.amount}</td>
+                                    <td style={styles.td}>{item.memo}</td>
                                 </tr>
                             ))}
+                            {/* 빈 행 (예시로 있던 지출 내역 자리를 비워둡니다) */}
+                            {expenses.length === 0 && (
+                                <tr>
+                                    <td style={{...styles.td, color: '#aaa'}}>항목</td>
+                                    <td style={{...styles.td, color: '#aaa'}}>입력 날짜</td>
+                                    <td style={{...styles.td, color: '#aaa'}}>예: KTX 입금액</td>
+                                    <td style={{...styles.td, color: '#aaa'}}>금액</td>
+                                    <td style={{...styles.td, color: '#aaa'}}>비고</td>
+                                </tr>
+                            )}
                         </tbody>
                     </table>
                 </div>
 
-                {/* 오른: 입력 및 도구 */}
+                {/* 2. 오른쪽 패널: 입력 및 캘린더 */}
                 <div style={styles.rightPanel}>
-                    {/* 달력 영역 */}
-                    {renderCalendar()}
-                    
-                    {/* 총 지출액 */}
-                    <div style={{ width: '100%', marginBottom: '30px', padding: '10px', border: '1px solid #ccc', backgroundColor: '#fff', borderRadius: '5px' }}>
-                        <h4 style={{ margin: '0 0 5px 0' }}>총 지출액</h4>
-                        <p style={{ fontSize: '1.5em', fontWeight: 'bold', color: '#1B2C4F' }}>
-                            {totalAmount.toLocaleString()}원
-                        </p>
+                    {/* 캘린더 영역 (임시) */}
+                    <div style={{ border: '1px solid #ddd', padding: '15px', borderRadius: '8px', marginBottom: '30px' }}>
+                        {/* 캘린더 라이브러리 (react-datepicker 등) 영역 */}
+                        <p style={{ color: '#aaa' }}>2025년 12월 달력 Placeholder</p>
                     </div>
 
-                    {/* 카테고리 아이콘 영역 */}
-                    <h4 style={{ color: '#666', marginBottom: '15px', borderBottom: '1px solid #ccc', paddingBottom: '5px', width: '100%', textAlign: 'center' }}>
-                        항목 선택
-                    </h4>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-                        {CATEGORIES.map(cat => (
-                            <div 
-                                key={cat.name} 
+                    <h3 style={{ margin: '0 0 10px 0', fontSize: '1.5em', color: '#1B2C4F' }}>
+                        총 지출액: {totalAmount.toLocaleString()}원
+                    </h3>
+
+                    <div style={styles.inputGroup}>
+                        {/* 지출 내역 입력 필드 */}
+                        <input
+                            type="text"
+                            name="description"
+                            placeholder="지출 내역 (예: 점심 식사)"
+                            value={currentExpense.description}
+                            onChange={handleInputChange}
+                            style={{...styles.input, textAlign: 'left'}}
+                        />
+                        {/* 지출 금액 입력 필드 */}
+                        <input
+                            type="number"
+                            name="amount"
+                            placeholder="금액 (원)"
+                            value={currentExpense.amount}
+                            onChange={handleInputChange}
+                            style={styles.input}
+                        />
+                         {/* 비고 입력 필드 */}
+                         <input
+                            type="text"
+                            name="memo"
+                            placeholder="비고"
+                            value={currentExpense.memo}
+                            onChange={handleInputChange}
+                            style={{...styles.input, textAlign: 'left', marginBottom: '0'}}
+                        />
+                    </div>
+                    
+                    <h4 style={{ margin: '20px 0 10px 0', color: '#333' }}>항목 선택: {currentExpense.category?.name || '선택 안 됨'}</h4>
+                    
+                    {/* 👇 항목 버튼 3x3 그리드 적용 👇 */}
+                    <div style={styles.categoryGrid}>
+                        {CATEGORIES.map((cat) => (
+                            <button
+                                key={cat.name}
+                                onClick={() => handleCategorySelect(cat)}
                                 style={{
-                                    ...styles.categoryIcon,
-                                    backgroundColor: currentExpense.category === cat.name ? '#32CD32' : '#fff',
-                                    color: currentExpense.category === cat.name ? 'white' : '#333',
+                                    ...styles.categoryButton,
+                                    border: currentExpense.category?.name === cat.name ? `2px solid ${cat.color}` : '1px solid #ddd',
+                                    backgroundColor: currentExpense.category?.name === cat.name ? '#e8f5e9' : '#f9f9f9',
+                                    color: cat.color,
                                 }}
-                                onClick={() => handleCategorySelect(cat.name)}
                             >
-                                <span style={{ fontSize: '2em', marginBottom: '5px' }}>{cat.icon}</span>
+                                <FontAwesomeIcon icon={cat.icon} style={{ fontSize: '1.5em', marginBottom: '5px' }} />
                                 {cat.name}
-                            </div>
+                            </button>
                         ))}
                     </div>
 
-                    {/* 저장 버튼 */}
-                    <button 
+                    <button
                         onClick={handleSave}
                         style={{
-                            padding: '12px 30px',
+                            marginTop: '30px',
+                            padding: '12px 0',
+                            width: '100%',
                             backgroundColor: '#1B2C4F',
                             color: 'white',
                             border: 'none',
-                            borderRadius: '4px',
+                            borderRadius: '5px',
                             cursor: 'pointer',
                             fontSize: '1.1em',
                             fontWeight: 'bold',
-                            marginTop: 'auto',
-                            width: '100%'
                         }}
                     >
                         저장
                     </button>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 
