@@ -1,10 +1,10 @@
-// src/pages/TicketPage.jsx (최종 - Header 컴포넌트 사용 및 경로 수정)
+// src/pages/TicketPage.jsx (최종 - 아이콘 중앙 정렬 및 통일)
 
-import React from 'react';
-import { useNavigate } => from 'react-router-dom';
-import Header from '../components-ui/Header'; // 👈 경로 수정
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // 👈 구문 오류 수정 완료!
+import Header from '../components-ui/Header'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTicketAlt, faCoins, faPlane, faMapMarkerAlt, faSuitcase } from '@fortawesome/free-solid-svg-icons';
+import { faTicketAlt } from '@fortawesome/free-solid-svg-icons'; // 티켓 아이콘 하나만 불러옴
 
 const styles = {
     container: {
@@ -47,17 +47,24 @@ const styles = {
         transition: 'transform 0.2s',
         cursor: 'pointer',
         border: '1px solid #eee',
+        // 👇 중앙 정렬을 위한 Flexbox 설정
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     icon: {
-        fontSize: '3em',
+        // 아이콘 크기 조정
+        fontSize: '4em', 
         marginBottom: '15px',
     }
 };
 
 const TICKET_PACKAGES = [
-    { name: 'Starter', tickets: 30, price: '5,000원', icon: faMapMarkerAlt, color: '#4CAF50' },
-    { name: 'Traveler', tickets: 70, price: '10,000원', icon: faPlane, color: '#2196F3' },
-    { name: 'Planner', tickets: 150, price: '20,000원', icon: faSuitcase, color: '#FF9800' },
+    // 모든 아이콘을 faTicketAlt로 통일
+    { name: 'Starter', tickets: 30, price: '5,000원', icon: faTicketAlt, color: '#4CAF50' },
+    { name: 'Traveler', tickets: 70, price: '10,000원', icon: faTicketAlt, color: '#2196F3' },
+    { name: 'Planner', tickets: 150, price: '20,000원', icon: faTicketAlt, color: '#FF9800' },
 ];
 
 const TicketDisplay = ({ currentTickets }) => (
@@ -89,9 +96,10 @@ function TicketPage() {
                     {TICKET_PACKAGES.map((pkg) => (
                         <div 
                             key={pkg.name} 
-                            style={{...styles.packageCard, ':hover': { transform: 'translateY(-5px)' }}}
+                            style={styles.packageCard} // styles.packageCard에 중앙 정렬 속성 적용됨
                             onClick={() => handleBuyClick(pkg.name)}
                         >
+                            {/* 아이콘과 텍스트가 모두 중앙 정렬 */}
                             <FontAwesomeIcon icon={pkg.icon} style={{...styles.icon, color: pkg.color}} />
                             <h2 style={{ color: pkg.color, marginTop: '10px' }}>{pkg.name} 패키지</h2>
                             <p style={{ fontSize: '2.5em', margin: '15px 0', fontWeight: 'bold' }}>{pkg.tickets} <span style={{ fontSize: '0.5em', fontWeight: 'normal' }}>개</span></p>
