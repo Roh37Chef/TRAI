@@ -1,9 +1,13 @@
-// src/pages/MyReviewPage.jsx
+// src/pages/MyReviewPage.jsx (3개 이미지 적용 최종 버전)
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import TraiLogo from '../assets/logo2.jpg'; 
-import SampleReviewImage from '../assets/review_sample.jpg'; // 임시 리뷰 이미지 경로 (실제 경로가 없다면 기본 이미지로 대체)
+
+// 👇 3개의 리뷰 이미지 파일 경로를 정확하게 불러옵니다. 👇
+import GangneungImage from '../assets/gangneung_restaurant.jpg'; 
+import BusanHotelImage from '../assets/busan_hotel.jpg';
+import BusanCafeImage from '../assets/busan_cafe.jpg';
 
 const styles = {
     header: {
@@ -147,7 +151,7 @@ const SAMPLE_REVIEWS = [
         content: '피자, 파스타를 먹을 수 있는 한옥 컨셉의 식당. 직원이 친절하고...',
         date: '2025.12.05',
         rating: 5,
-        image: SampleReviewImage
+        image: GangneungImage // 👈 '강릉 식당' 이미지 변수 적용
     },
     {
         id: 2,
@@ -156,7 +160,7 @@ const SAMPLE_REVIEWS = [
         content: '광안대교가 정면에 보이는 뷰파는 끝내주는 호텔입니다.',
         date: '2024.01.21',
         rating: 4,
-        image: SampleReviewImage
+        image: BusanHotelImage // 👈 '부산 호텔' 이미지 변수 적용
     },
     {
         id: 3,
@@ -165,7 +169,7 @@ const SAMPLE_REVIEWS = [
         content: '전에 와있을 때도 자주 왔는데 사장도 분위기도 좋고 맛도 좋아요.',
         date: '2023.11.09',
         rating: 5,
-        image: SampleReviewImage
+        image: BusanCafeImage // 👈 '부산 카페' 이미지 변수 적용
     }
 ];
 
