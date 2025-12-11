@@ -1,10 +1,11 @@
-// src/pages/Option3Page.jsx (Datepicker로 교체된 최종 코드)
+// src/pages/Option3Page.jsx (Datepicker 사용 코드)
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import DatePicker from 'react-datepicker'; // 👈 새 라이브러리
+import DatePicker from 'react-datepicker'; 
 import LargeLogo from '../assets/logo1.jpg'; 
-import 'react-datepicker/dist/react-datepicker.css'; // 👈 Datepicker용 필수 CSS
+import 'react-datepicker/dist/react-datepicker.css'; 
+// import Calendar from 'react-calendar' 흔적이 남아있지 않도록 확인!
 
 const Option3Page = () => {
     const navigate = useNavigate();
@@ -34,7 +35,7 @@ const Option3Page = () => {
         fontSize: '1em', 
         border: '1px solid #ccc', 
         borderRadius: '4px',
-        width: '200px', // 입력 필드 크기 조정
+        width: '200px',
         cursor: 'pointer'
     };
 
@@ -66,7 +67,7 @@ const Option3Page = () => {
                         selectsStart
                         startDate={goingDate}
                         endDate={comingDate}
-                        minDate={new Date()} // 오늘 이전 날짜 선택 불가
+                        minDate={new Date()}
                         placeholderText="가는 날짜 선택"
                         customInput={<input style={dateInputStyle} />}
                     />
@@ -83,10 +84,10 @@ const Option3Page = () => {
                         selectsEnd
                         startDate={goingDate}
                         endDate={comingDate}
-                        minDate={goingDate || new Date()} // 가는 날 이후 선택 가능
+                        minDate={goingDate || new Date()}
                         placeholderText="오는 날짜 선택"
                         customInput={<input style={dateInputStyle} />}
-                        disabled={!goingDate} // 가는 날이 선택되어야 활성화
+                        disabled={!goingDate}
                     />
                 </div>
             </div>
