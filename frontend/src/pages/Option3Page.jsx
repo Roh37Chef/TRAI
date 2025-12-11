@@ -1,10 +1,8 @@
-// src/pages/Option3Page.jsx (react-datepicker 제거, HTML Input 대체 최종 버전)
+// src/pages/Option3Page.jsx (의존성 제거 및 HTML Input 대체 최종 버전)
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// ❌ 아래 두 줄은 삭제/제거되었습니다.
-// import DatePicker from 'react-datepicker'; 
-// import 'react-datepicker/dist/react-datepicker.css'; 
+// react-datepicker 관련 import는 모두 제거되었습니다.
 
 import LargeLogo from '../assets/logo1.jpg'; 
 
@@ -26,16 +24,17 @@ const inputStyle = {
     cursor: 'pointer',
     width: '200px',
     marginTop: '10px',
-    // HTML input[type=date] 스타일 추가
+    // HTML input[type=date] 스타일
     height: '40px',
+    fontFamily: 'inherit', // 기본 폰트 상속
 };
 
 const Option3Page = () => {
     const navigate = useNavigate();
-    const [goingDate, setGoingDate] = useState(''); // 문자열로 변경
-    const [comingDate, setComingDate] = useState(''); // 문자열로 변경
+    const [goingDate, setGoingDate] = useState(''); // YYYY-MM-DD 문자열 저장
+    const [comingDate, setComingDate] = useState(''); // YYYY-MM-DD 문자열 저장
 
-    // 오늘 날짜를 YYYY-MM-DD 형식으로 반환
+    // 오늘 날짜를 YYYY-MM-DD 형식으로 반환 (min 속성에 사용)
     const getToday = () => {
         const date = new Date();
         return date.toISOString().split('T')[0];
