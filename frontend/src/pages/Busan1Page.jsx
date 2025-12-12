@@ -1,25 +1,11 @@
-// src/pages/Busan1Page.jsx (최종 - MapDiv 제거 및 직접 렌더링 방식 복구)
+// src/pages/Busan1Page.jsx (최종 - 지도 기능 제거)
 
 import React from 'react';
-// MapDiv 제거
-import { useNavermaps, NaverMap } from 'react-naver-maps'; 
+// NaverMap 관련 import 모두 제거합니다.
 import TraiLogo from '../assets/logo1.jpg'; 
 
 const Busan1Page = () => {
-    // API 로드가 main.jsx의 MapProvider를 통해 처리됩니다.
-    const navermaps = useNavermaps();
-    
-    // 네이버 지도 API 객체가 로드되지 않았다면 로딩 메시지 반환
-    if (!navermaps) {
-        return (
-            <div style={{ textAlign: 'center', paddingTop: '100px' }}>
-                지도 API 로딩 중...
-            </div>
-        );
-    }
-    
-    // 초기 중심 좌표 (부산 시청)
-    const initialCenter = new navermaps.LatLng(35.1795, 129.0756); 
+    // 지도 API 관련 로직 제거 (useNavermaps, if (!navermaps) 등)
     
     const schedule = [
         { day: 'DAY 1', title: '해운대 & 달맞이길' },
@@ -45,6 +31,18 @@ const Busan1Page = () => {
         marginBottom: '20px',
         display: 'block'
     };
+
+    const mapPlaceholderStyle = {
+        flexGrow: 1,
+        height: '100vh',
+        backgroundColor: '#e0e0e0', // 지도가 들어갈 영역에 회색 배경 표시
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: '1.5em',
+        color: '#666'
+    };
+
 
     return (
         <div style={{ display: 'flex', height: '100vh', width: '100%' }}>
@@ -90,17 +88,9 @@ const Busan1Page = () => {
                 </button>
             </div>
 
-            {/* 우측 네이버 지도 영역 (MapDiv 대신 일반 div 사용 및 NaverMap 직접 렌더링) */}
-            <div style={{ flexGrow: 1 }}>
-                <NaverMap
-                    defaultCenter={initialCenter}
-                    defaultZoom={12}
-                    // NaverMap 컴포넌트 자체에 스타일을 직접 적용합니다.
-                    style={{ width: '100%', height: '100%' }} 
-                    zoomControl={true}
-                >
-                    {/* 마커는 제거하고 기본 지도만 표시 */}
-                </NaverMap>
+            {/* 우측 지도 영역 (Placeholder로 대체) */}
+            <div style={mapPlaceholderStyle}>
+                지도 렌더링 불가 (API 충돌)
             </div>
         </div>
     );
