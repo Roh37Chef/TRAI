@@ -1,4 +1,4 @@
-// src/pages/Option3Page.jsx (최종 - 디자인 달력 UI 유지 및 실행 가능 버전)
+// src/pages/Option3Page.jsx (최종 - 디자인 달력 UI 및 기능 포함)
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
