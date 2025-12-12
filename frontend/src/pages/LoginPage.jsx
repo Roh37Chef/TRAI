@@ -1,75 +1,121 @@
-// src/pages/LoginPage.jsx (최종 - Header 사용 및 경로 수정)
-
-import React, { useState } from 'react';
+import React from 'react';
+import { Box, Typography, TextField, Button, Link, Container } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import Header from '../components-ui/Header'; // 👈 경로 수정
 
 function LoginPage() {
-    const navigate = useNavigate();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-    const handleLogin = () => {
-        // 실제 로그인 로직 (현재는 임시로 /loginsuccess로 이동)
-        if (email && password) {
-            navigate('/loginsuccess');
-        } else {
-            alert('이메일과 비밀번호를 입력해주세요.');
-        }
-    };
-    
-    return (
-        <div style={{ minHeight: '100vh', backgroundColor: '#f4f4f4' }}>
-            <Header /> 
-            <div style={{ 
-                maxWidth: '400px', 
-                margin: '50px auto', 
-                padding: '30px', 
-                backgroundColor: '#fff', 
-                borderRadius: '8px', 
-                boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-                textAlign: 'center'
-            }}>
-                <h1 style={{ fontSize: '2.5em', color: '#1B2C4F', marginBottom: '30px' }}>로그인</h1>
-                
-                <input
-                    type="email"
-                    placeholder="이메일"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    style={{ padding: '10px', width: '100%', marginBottom: '15px', borderRadius: '4px', border: '1px solid #ccc' }}
-                />
-                <input
-                    type="password"
-                    placeholder="비밀번호"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    style={{ padding: '10px', width: '100%', marginBottom: '25px', borderRadius: '4px', border: '1px solid #ccc' }}
-                />
+  return (
+    <Box sx={{ 
+      minHeight: '100vh', 
+      backgroundColor: 'white', 
+      display: 'flex', 
+      flexDirection: 'column' 
+    }}>
+      
+      {/* 1. 상단 헤더 (로고 영역) */}
+      <Box sx={{ padding: '20px 40px' }}>
+        <Box 
+          sx={{ display: 'inline-flex', alignItems: 'center', cursor: 'pointer' }} 
+          onClick={() => navigate('/')} // 클릭 시 홈 화면으로 이동
+        >
+          {/* TRAI 로고 디자인 적용 */}
+          <Typography variant="h4" component="span" sx={{ fontWeight: '900', color: '#002147', fontFamily: 'sans-serif' }}>
+            TR
+          </Typography>
+          <Typography variant="h4" component="span" sx={{ fontWeight: '900', color: '#00C896', fontFamily: 'sans-serif' }}>
+            AI
+          </Typography>
+        </Box>
+      </Box>
 
-                <button
-                    onClick={handleLogin}
-                    style={{
-                        padding: '12px 0',
-                        width: '100%',
-                        backgroundColor: '#1B2C4F',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '4px',
-                        cursor: 'pointer',
-                        fontSize: '1.1em',
-                        marginBottom: '10px'
-                    }}
-                >
-                    로그인
-                </button>
+      {/* 2. 로그인 입력 폼 컨테이너 */}
+      <Container maxWidth="xs" sx={{ 
+        flexGrow: 1, 
+        display: 'flex', 
+        flexDirection: 'column', 
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingBottom: '10vh'
+      }}>
+        
+        {/* 페이지 제목 */}
+        <Typography variant="h3" sx={{ fontWeight: 'bold', marginBottom: 6, color: 'black', fontFamily: 'sans-serif' }}>
+          LOGIN
+        </Typography>
 
-                <p style={{ fontSize: '0.9em', color: '#666' }}>
-                    계정이 없으신가요? <span onClick={() => navigate('/signup')} style={{ color: '#1B2C4F', cursor: 'pointer', fontWeight: 'bold' }}>회원가입</span>
-                </p>
-            </div>
-        </div>
-    );
+        {/* 이메일 입력 필드 */}
+        <Box sx={{ width: '100%', marginBottom: 3 }}>
+          <Typography variant="subtitle2" sx={{ fontWeight: 'bold', marginBottom: 1, color: '#333' }}>
+            Email
+          </Typography>
+          <TextField 
+            fullWidth 
+            placeholder="Value" 
+            variant="outlined" 
+            sx={{ 
+              backgroundColor: '#fff',
+              '& .MuiOutlinedInput-root': { borderRadius: '8px' } // 모서리 둥글게 처리
+            }}
+          />
+        </Box>
+
+        {/* 비밀번호 입력 필드 */}
+        <Box sx={{ width: '100%', marginBottom: 4 }}>
+          <Typography variant="subtitle2" sx={{ fontWeight: 'bold', marginBottom: 1, color: '#333' }}>
+            Password
+          </Typography>
+          <TextField 
+            fullWidth 
+            placeholder="Value" 
+            type="password" 
+            variant="outlined" 
+            sx={{ 
+              backgroundColor: '#fff',
+              '& .MuiOutlinedInput-root': { borderRadius: '8px' }
+            }}
+          />
+        </Box>
+
+        {/* 로그인 버튼 (클릭 시 메인 페이지로 이동) */}
+        <Button 
+          fullWidth 
+          variant="contained" 
+          size="large"
+          sx={{ 
+            backgroundColor: '#222', // 피그마 디자인의 짙은 색상 적용
+            color: 'white',
+            padding: '12px',
+            borderRadius: '8px',
+            fontWeight: 'bold',
+            textTransform: 'none', 
+            fontSize: '1rem',
+            marginBottom: 2,
+            '&:hover': { backgroundColor: '#444' }
+          }}
+          onClick={() => navigate('/main')} 
+        >
+          Sign In
+        </Button>
+
+        {/* 하단 링크 영역 (비밀번호 찾기 / 회원가입) */}
+        <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
+          <Link href="#" underline="always" sx={{ color: '#333', fontSize: '0.9rem' }}>
+            Forgot password?
+          </Link>
+          <Link 
+            component="button" 
+            onClick={() => navigate('/signup')}  // 회원가입 페이지 이동
+            underline="always" 
+            sx={{ color: '#333', fontSize: '0.9rem', fontWeight: 'bold' }}
+          >
+            Sign up
+          </Link>
+        </Box>
+
+      </Container>
+    </Box>
+  );
 }
 
 export default LoginPage;
