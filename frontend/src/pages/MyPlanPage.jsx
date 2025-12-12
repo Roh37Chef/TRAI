@@ -109,7 +109,7 @@ const SAMPLE_PLANS = [
         id: 1,
         title: "방학여행",
         location: "부산",
-        dates: "2026.01.13. ~ 2026.01.",
+        dates: "2026.01.13. ~ 2026.01.16",
         icon: '🌊',
         isSaved: true // 이 항목만 저장된 것으로 간주
     },
@@ -117,7 +117,7 @@ const SAMPLE_PLANS = [
         id: 2,
         title: "가족여행",
         location: "강릉",
-        dates: "2025.11.30.",
+        dates: "2025.11.30. ~ 2025.12.01.",
         icon: '🏂',
         isSaved: false
     },
@@ -133,7 +133,7 @@ const SAMPLE_PLANS = [
         id: 4,
         title: "빵집 투어",
         location: "대전",
-        dates: "2023.12.12.",
+        dates: "2023.12.12. ~ 2023.12.13.",
         icon: '🥐',
         isSaved: false
     }
