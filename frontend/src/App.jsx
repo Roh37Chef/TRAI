@@ -1,10 +1,10 @@
-// src/App.jsx (최종 - BusanPage 라우트 추가 및 클린 상태)
+// src/App.jsx (최종 - BusanPage 라우트 유연성 추가 및 클린 상태)
 
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 // =================================================================
-// 1. 모든 페이지 Import (BusanPage 추가)
+// 1. 모든 페이지 Import 
 // =================================================================
 import MainPage from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
@@ -19,7 +19,7 @@ import Option4Page from './pages/Option4Page';
 import Option6Page from './pages/Option6Page'; 
 
 // 부산 페이지 추가
-import BusanPage from './pages/BusanPage'; // 👈 새로 추가된 부산 페이지
+import BusanPage from './pages/BusanPage';
 
 // 기타 페이지
 import LoadingPage from './pages/LoadingPage';
@@ -55,9 +55,10 @@ function App() {
                 <Route path="/option3" element={<Option3Page />} />
                 <Route path="/option4" element={<Option4Page />} />
                 <Route path="/option6" element={<Option6Page />} />
-                
-                {/* 부산 페이지 라우트 추가 */}
+
+                {/* 부산 페이지 라우트 (BusanPage를 /busanpage 및 /Busan 모두 허용) */}
                 <Route path="/busanpage" element={<BusanPage />} />
+                <Route path="/Busan" element={<BusanPage />} /> {/* 👈 추가된 경로 */}
 
                 {/* 나머지 페이지 라우트 */}
                 <Route path="/loading" element={<LoadingPage />} />
