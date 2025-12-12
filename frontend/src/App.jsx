@@ -1,11 +1,10 @@
-// src/App.jsx (최종 - 지도 관련 코드 완벽 제거 및 Option3 실행 중심)
+// src/App.jsx (최종 - BusanPage 라우트 추가 및 클린 상태)
 
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-// ⚠️ 기존에 오류를 일으키던 'react-naver-maps' import는 완전히 제거되었습니다.
 
 // =================================================================
-// 1. 모든 페이지 Import (MapPage, Busan1Page는 삭제했으므로 제외)
+// 1. 모든 페이지 Import (BusanPage 추가)
 // =================================================================
 import MainPage from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
@@ -18,6 +17,9 @@ import Option2Page from './pages/Option2Page';
 import Option3Page from './pages/Option3Page';
 import Option4Page from './pages/Option4Page';
 import Option6Page from './pages/Option6Page'; 
+
+// 부산 페이지 추가
+import BusanPage from './pages/BusanPage'; // 👈 새로 추가된 부산 페이지
 
 // 기타 페이지
 import LoadingPage from './pages/LoadingPage';
@@ -53,8 +55,11 @@ function App() {
                 <Route path="/option3" element={<Option3Page />} />
                 <Route path="/option4" element={<Option4Page />} />
                 <Route path="/option6" element={<Option6Page />} />
+                
+                {/* 부산 페이지 라우트 추가 */}
+                <Route path="/busanpage" element={<BusanPage />} />
 
-                {/* 나머지 페이지 라우트 (Busan1page, MapPage 라우트 제거됨) */}
+                {/* 나머지 페이지 라우트 */}
                 <Route path="/loading" element={<LoadingPage />} />
                 <Route path="/welfare" element={<WelfarePage />} />
                 <Route path="/moneypage" element={<MoneyPage />} />
