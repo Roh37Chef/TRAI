@@ -1,8 +1,8 @@
-// src/App.jsx (최종 라우팅 통합 버전 - 모든 구현 경로 포함)
+// src/App.jsx (고객님 제공 최종 라우팅 통합 버전)
 
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { NavermapsProvider } from 'react-naver-maps';
+import { NavermapsProvider } from 'react-naver-maps'; // NavermapsProvider 사용
 
 // =================================================================
 // 1. 모든 페이지 Import
@@ -26,16 +26,16 @@ import MapPage from './pages/MapPage';
 import WelfarePage from './pages/WelfarePage'; 
 
 // 햄버거 메뉴 및 마이페이지 경로
-import MoneyPage from './pages/MoneyPage';                 // 가계부
-import ReviewPage from './pages/ReviewPage';               // 여행 후기 (목록)
+import MoneyPage from './pages/MoneyPage';              // 가계부
+import ReviewPage from './pages/ReviewPage';            // 여행 후기 (목록)
 import DisabledPersonPage from './pages/DisabledPersonPage'; // 지원 제도 안내
-import TicketPage from './pages/TicketPage';               // 티켓 구매
-import MyPlanPage from './pages/MyPlanPage';               // 마이페이지 - 여행 계획
-import MyReviewPage from './pages/MyReviewPage';           // 마이페이지 - 리뷰
+import TicketPage from './pages/TicketPage';            // 티켓 구매
+import MyPlanPage from './pages/MyPlanPage';            // 마이페이지 - 여행 계획
+import MyReviewPage from './pages/MyReviewPage';            // 마이페이지 - 리뷰
 
 // 상세 후기 경로
 import GangneungReviewPage from './pages/GangneungReviewPage'; // 강릉 리뷰 목록
-import JungwhaDetailPage from './pages/JungwhaDetailPage';       // 정화식당 상세 리뷰
+import JungwhaDetailPage from './pages/JungwhaDetailPage';      // 정화식당 상세 리뷰
 
 
 // =================================================================
@@ -44,9 +44,10 @@ import JungwhaDetailPage from './pages/JungwhaDetailPage';       // 정화식당
 
 function App() {
     return (
+        // NavermapsProvider를 사용합니다.
         <NavermapsProvider
             // Client ID 적용
-            clientId="nsna3qednt"
+            clientId="nsna3qednt" 
             submodules={["panorama", "geocoder"]}
         >
             <Router>
