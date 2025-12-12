@@ -1,17 +1,19 @@
-// src/pages/Busan1Page.jsx (최종 - MapDiv 래퍼 적용)
+// src/pages/Busan1Page.jsx (최종 - MapDiv 제거 및 직접 렌더링 방식 복구)
 
 import React from 'react';
-// 👇 MapDiv 컴포넌트 추가
-import { useNavermaps, NaverMap, MapDiv } from 'react-naver-maps'; 
+// MapDiv 제거
+import { useNavermaps, NaverMap } from 'react-naver-maps'; 
 import TraiLogo from '../assets/logo1.jpg'; 
 
 const Busan1Page = () => {
+    // API 로드가 main.jsx의 MapProvider를 통해 처리됩니다.
     const navermaps = useNavermaps();
     
+    // 네이버 지도 API 객체가 로드되지 않았다면 로딩 메시지 반환
     if (!navermaps) {
         return (
             <div style={{ textAlign: 'center', paddingTop: '100px' }}>
-                지도 API 로딩 중... (Client ID 적용 완료)
+                지도 API 로딩 중...
             </div>
         );
     }
@@ -88,19 +90,17 @@ const Busan1Page = () => {
                 </button>
             </div>
 
-            {/* 우측 네이버 지도 영역 (MapDiv로 감싸기) */}
+            {/* 우측 네이버 지도 영역 (MapDiv 대신 일반 div 사용 및 NaverMap 직접 렌더링) */}
             <div style={{ flexGrow: 1 }}>
-                {/* 👇 MapDiv로 감싸서 오류 해결 */}
-                <MapDiv style={{ width: '100%', height: '100%' }}>
-                    <NaverMap
-                        defaultCenter={initialCenter}
-                        defaultZoom={12}
-                        style={{ width: '100%', height: '100%' }}
-                        zoomControl={true}
-                    >
-                        {/* 마커는 제거하고 기본 지도만 표시 */}
-                    </NaverMap>
-                </MapDiv>
+                <NaverMap
+                    defaultCenter={initialCenter}
+                    defaultZoom={12}
+                    // NaverMap 컴포넌트 자체에 스타일을 직접 적용합니다.
+                    style={{ width: '100%', height: '100%' }} 
+                    zoomControl={true}
+                >
+                    {/* 마커는 제거하고 기본 지도만 표시 */}
+                </NaverMap>
             </div>
         </div>
     );
