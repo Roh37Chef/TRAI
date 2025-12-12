@@ -6,7 +6,7 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import LocalActivityIcon from '@mui/icons-material/LocalActivity'; 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'; 
-import ExpandLessIcon from '@mui/icons-material/ExpandLess'; // 접기 아이콘 추가
+import ExpandLessIcon from '@mui/icons-material/ExpandLess'; // 접기 아이콘
 import { useNavigate } from 'react-router-dom';
 import mainBgImage from '../assets/mainpagebgi.jpg';
 
@@ -33,10 +33,10 @@ function MainPage() {
     setIsMyPageOpen(!isMyPageOpen);
   };
 
-  // 일정 생성 핸들러
+  // 일정 생성 핸들러 (티켓 차감 로직 포함)
   const handleCreate = () => {
     if (myTickets < 15) {
-      alert("티켓이 부족합니다! 😭");
+      alert("티켓이 부족합니다!");
       return;
     }
     if (!url) {
@@ -49,7 +49,7 @@ function MainPage() {
     }
   };
 
-  // 드로어 내용
+  // 사이드바(드로어) 메뉴 내용
   const drawerContent = (
     <Box
       sx={{ width: 250 }}
@@ -59,7 +59,7 @@ function MainPage() {
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        {/* 1. 로그인/회원가입 (로그아웃) */}
+        {/* 1. 로그인/회원가입 (로그아웃 기능) */}
         <ListItem button onClick={() => { alert("로그아웃 되었습니다."); navigate('/'); }}>
           <ListItemText primary={<Typography fontWeight="bold">로그인/회원가입</Typography>} />
         </ListItem>
@@ -83,7 +83,7 @@ function MainPage() {
         </ListItem>
         <Divider />
 
-        {/* 5. 티켓 구매 (새로 추가된 메뉴) */}
+        {/* 5. 티켓 구매 */}
         <ListItem button onClick={() => alert("티켓 구매 페이지 (준비중)")}>
           <ListItemText primary={<Typography fontWeight="bold">티켓 구매</Typography>} />
         </ListItem>
@@ -118,22 +118,29 @@ function MainPage() {
   return (
     <Box sx={{ flexGrow: 1, height: '100vh', display: 'flex', flexDirection: 'column' }}>
       
-      {/* 헤더 */}
+      {/* 상단 헤더 영역 */}
       <AppBar position="static" color="inherit" elevation={0} sx={{ backgroundColor: 'white', padding: '0 10px' }}>
         <Toolbar sx={{ justifyContent: 'space-between' }}>
+          {/* 로고 (클릭 시 홈으로) */}
           <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={() => navigate('/')}>
             <Typography variant="h4" component="span" sx={{ fontWeight: '900', color: '#002147', fontFamily: 'sans-serif' }}>TR</Typography>
             <Typography variant="h4" component="span" sx={{ fontWeight: '900', color: '#00C896', fontFamily: 'sans-serif' }}>AI</Typography>
           </Box>
 
+          {/* 우측 상단 정보 (티켓, 로그아웃, 메뉴) */}
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            {/* 티켓 정보 표시 */}
             <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: '#f5f5f5', padding: '6px 12px', borderRadius: '20px', border: '1px solid #ddd' }}>
               <LocalActivityIcon sx={{ color: '#002147', fontSize: 20, marginRight: 1 }} />
               <Typography sx={{ fontWeight: 'bold', color: '#333' }}>{myTickets}</Typography>
             </Box>
+            
+            {/* 로그아웃 버튼 */}
             <Button color="inherit" onClick={() => navigate('/')} sx={{ fontWeight: 'bold', fontSize: '1rem', textTransform: 'none' }}>
               Logout
             </Button>
+            
+            {/* 햄버거 메뉴 아이콘 */}
             <IconButton edge="end" color="inherit" aria-label="menu" onClick={toggleDrawer(true)}>
               <MenuIcon sx={{ fontSize: 30 }} />
             </IconButton>
@@ -146,7 +153,7 @@ function MainPage() {
         {drawerContent}
       </Drawer>
 
-      {/* 메인 컨텐츠 */}
+      {/* 메인 컨텐츠 영역 (배경 이미지 및 입력창) */}
       <Box
         sx={{
           flexGrow: 1,
@@ -160,7 +167,9 @@ function MainPage() {
           position: 'relative'
         }}
       >
+        {/* 배경 어둡게 처리 */}
         <Box sx={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.4)' }} />
+        
         <Container maxWidth="md" sx={{ position: 'relative', zIndex: 1, color: 'white', textAlign: 'left' }}>
           <Typography variant="h5" sx={{ fontWeight: '500', marginBottom: 1, textShadow: '1px 1px 4px rgba(0,0,0,0.5)' }}>
             떠나고 싶은 여행을 찾으셨나요?
@@ -168,6 +177,8 @@ function MainPage() {
           <Typography variant="h2" component="h1" sx={{ fontWeight: 'bold', marginBottom: 6, textShadow: '2px 2px 8px rgba(0,0,0,0.6)' }}>
             나를 위한 여행, TRAI
           </Typography>
+          
+          {/* URL 입력창 */}
           <Paper component="form" sx={{ p: '10px 20px', display: 'flex', alignItems: 'center', width: '100%', borderRadius: '12px', marginBottom: 3 }}>
             <InputBase
               sx={{ ml: 1, flex: 1, fontSize: '1.1rem' }}
@@ -176,6 +187,8 @@ function MainPage() {
               onChange={(e) => setUrl(e.target.value)}
             />
           </Paper>
+          
+          {/* 일정 생성 버튼 */}
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Button 
               variant="contained"

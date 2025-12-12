@@ -1,29 +1,14 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+/* src/index.css */
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* 1. 기본 초기화 설정 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* 링크 스타일 */
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-/* 화면 꽉 채우기 설정 */
+/* 2. 화면 전체 영역 설정 */
+/* html, body, root가 화면을 100% 꽉 채우도록 설정 */
 html, body {
   margin: 0;
   padding: 0;
@@ -33,23 +18,37 @@ html, body {
 }
 
 body {
+  font-family: Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   min-width: 320px;
   min-height: 100vh;
 }
 
-/* 리액트 앱이 들어가는 실제 공간도 꽉 채우기 */
+/* 3. 리액트 앱(#root) 공간 설정 */
+/* 내부 컴포넌트가 화면 전체를 사용할 수 있도록 크기 지정 */
 #root {
   width: 100%;
   height: 100%;
 }
 
-/* 제목 스타일 */
+/* 4. 공통 스타일 (제목, 링크) */
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
 
-/* 버튼 스타일 */
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: #535bf2;
+}
+
+/* 5. 버튼 스타일 (디자인 시안 적용) */
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -61,15 +60,17 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-/* 라이트 모드 설정 */
+/* 6. 라이트 모드 지원 설정 */
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
