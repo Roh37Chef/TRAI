@@ -1,4 +1,4 @@
-// src/pages/Option3Page.jsx (최종 - 디자인 달력 UI 유지 및 실행 가능 버전)
+// src/pages/Option3Page.jsx (최종 - 문법 오류 수정 완료)
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -63,17 +63,17 @@ const Option3Page = () => {
                 />
             </div>
 
-            <p style={{ fontSize: '0.9em', color: "#32CD32", fontWeight: "bold", marginBottom: "40px", letterSpacing: "1px" }}>
+            <p style={{ fontSize: '0.9em', color: '#32CD32', fontWeight: 'bold', marginBottom: '40px', letterSpacing: '1px' }}>
                 AI-PLANNED, PERSONALIZED ADVENTURES
             </p>
             
-            <h2 style={{ fontSize: '2em', fontWeight: "bold", margin: "0 0 50px 0", color: "black" }}>
+            <h2 style={{ fontSize: '2em', fontWeight: 'bold', margin: '0 0 50px 0', color: 'black' }}>
                 Q. 원하는 날짜를 선택해주세요.
             </h2>
 
             <div style={datePickerContainerStyle}>
                 <div>
-                    <h3 style={{ marginBottom: '15px', color: "black", fontWeight: "bold", fontSize: "1.2em", textAlign: "left" }}>
+                    <h3 style={{ marginBottom: '15px', color: 'black', fontWeight: 'bold', fontSize: '1.2em', textAlign: 'left' }}>
                         📅 가는 날 (체크인)
                     </h3>
                     <DatePicker 
@@ -89,7 +89,7 @@ const Option3Page = () => {
                 </div>
                 
                 <div>
-                    <h3 style={{ marginBottom: '15px', color: "black", fontWeight: "bold", fontSize: "1.2em", textAlign: "left" }}>
+                    <h3 style={{ marginBottom: '15px', color: 'black', fontWeight: 'bold', fontSize: '1.2em', textAlign: 'left' }}>
                         🗓️ 오는 날 (체크아웃)
                     </h3>
                     <DatePicker 
