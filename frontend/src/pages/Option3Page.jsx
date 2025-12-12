@@ -105,3 +105,25 @@ const Option3Page = () => {
                     />
                 </div>
             </div>
+
+            <button
+                onClick={handleNext}
+                style={{
+                    marginTop: '60px',
+                    padding: '15px 50px',
+                    backgroundColor: '#1B2C4F',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                    fontSize: '1.1em',
+                    fontWeight: 'bold'
+                }}
+            >
+                다음
+            </button>
+        </div>
+    );
+};
+
+export default Option3Page;
