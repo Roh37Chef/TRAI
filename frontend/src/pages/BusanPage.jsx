@@ -1,12 +1,14 @@
-// src/pages/BusanPage.jsx (최종 - Import 구문 오류 수정 완료)
+// src/pages/BusanPage.jsx (최종 - Import 구문 오류 수정 완료 + DAY 2 배경 이미지 변경 기능 추가)
 
-import React, { useState } from 'react'; // 👈 '=>' 대신 'from'으로 수정
+import React, { useState } from 'react'; 
 import { useNavigate } from 'react-router-dom';
 
 // 로고 및 지도 이미지 경로
 import TraiLogo from '../assets/logo1.jpg'; 
 // ⚠️ 주의: 이 파일은 프로젝트 폴더에 있어야 합니다.
 import BusanRouteImage from '../assets/busan_map_route.jpg'; 
+// ✅ DAY 2 배경 이미지 경로 추가
+import BusanRouteImageDay2 from '../assets/busan_map_route_day2.jpg'; 
 
 const initialSchedule = {
     'DAY 1': [
@@ -135,7 +137,7 @@ const FixedMarkersOverlay = ({ showChargingStations, showRentalLocations }) => {
 
 
 // ===============================================
-// 메인 컴포넌트: BusanPage (수정 없음)
+// 메인 컴포넌트: BusanPage (배경 이미지 로직 수정)
 // ===============================================
 const BusanPage = () => { 
     const navigate = useNavigate();
@@ -196,13 +198,22 @@ const BusanPage = () => {
         marginRight: '10px'
     };
 
+    // ✅ 선택된 DAY에 따라 배경 이미지 URL을 동적으로 결정하는 로직
+    const getMapBackground = () => {
+        if (selectedDay === 'DAY 2') {
+            return `url(${BusanRouteImageDay2})`; // DAY 2 선택 시 새로운 이미지 사용
+        }
+        return `url(${BusanRouteImage})`; // 기본 이미지 (DAY 1 및 기타)
+    };
+
     const mapStyle = {
         flexGrow: 1,
         height: '100vh',
-        backgroundImage: `url(${BusanRouteImage})`, 
+        backgroundImage: getMapBackground(), // ✅ 함수 호출
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         position: 'relative', 
+        transition: 'background-image 0.5s ease', // 부드러운 전환 효과 (선택 사항)
     };
 
     return (
