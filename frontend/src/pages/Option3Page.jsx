@@ -1,4 +1,4 @@
-// src/pages/Option3Page.jsx (최종 - 디자인 달력 UI 및 기능 포함)
+// src/pages/Option3Page.jsx (최종 - 디자인 달력 UI 유지 및 실행 가능 버전)
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -105,25 +105,3 @@ const Option3Page = () => {
                     />
                 </div>
             </div>
-
-            <button
-                onClick={handleNext}
-                style={{
-                    marginTop: '60px',
-                    padding: '15px 50px',
-                    backgroundColor: '#1B2C4F',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '5px',
-                    cursor: 'pointer',
-                    fontSize: '1.1em',
-                    fontWeight: 'bold'
-                }}
-            >
-                다음
-            </button>
-        </div>
-    );
-};
-
-export default Option3Page;
