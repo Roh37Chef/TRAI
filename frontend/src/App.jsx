@@ -1,27 +1,32 @@
 import { NavermapsProvider } from 'react-naver-maps';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import WelfarePage from './pages/WelfarePage';
 import MapPage from './pages/MapPage';
+import SignupPage from './pages/SignupPage';
+import MainPage from './pages/MainPage';
 
 function App() {
   return (
-  
+    // index.html에 키를 넣었으므로 여기선 껍데기만 사용
     <NavermapsProvider>
       <BrowserRouter>
-        <div style={{ padding: '20px' }}>
-          <nav style={{ marginBottom: '20px', display: 'flex', gap: '15px' }}>
-            <Link to="/">홈/지도</Link>
-            <Link to="/welfare">장애인 복지 정보</Link>
-            <Link to="/login">로그인/회원가입</Link>
-          </nav>
+        <Routes>
+          {/* ✨ 기본 경로("/") 접속 시 HomePage를 보여줌 */}
+          <Route path="/" element={<HomePage />} />
 
-          <Routes>
-            <Route path="/" element={<MapPage />} />
-            <Route path="/welfare" element={<WelfarePage />} />
-            <Route path="/login" element={<LoginPage />} />
-          </Routes>
-        </div>
+          {/* ✨ 2. 회원가입 경로 추가! */}
+          <Route path="/signup" element={<SignupPage />} />
+
+          {/* ✨ 로그인 후 접속할 메인 페이지 경로 추가 */}
+          <Route path="/main" element={<MainPage />} />
+          
+          {/* 나머지 페이지들 */}
+          <Route path="/map" element={<MapPage />} />
+          <Route path="/welfare" element={<WelfarePage />} />
+          <Route path="/login" element={<LoginPage />} />
+        </Routes>
       </BrowserRouter>
     </NavermapsProvider>
   );
