@@ -69,7 +69,7 @@ const Option3Page = () => {
             
             <h2 style={{ fontSize: '2em', fontWeight: 'bold', margin: '0 0 50px 0', color: 'black' }}>
                 Q. 원하는 날짜를 선택해주세요.
-            </h2>
+            </h2 >
 
             <div style={datePickerContainerStyle}>
                 <div>
