@@ -1,4 +1,4 @@
-// src/pages/BusanPage.jsx (Busan1Page의 모든 UI/기능을 담은 최종 버전)
+// src/pages/BusanPage.jsx (최종 - 로고 클릭 시 LoginSuccessPage 이동 기능 추가)
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -10,53 +10,89 @@ import BusanRouteImage from '../assets/busan_map_route.jpg';
 
 const initialSchedule = {
     'DAY 1': [
-        { type: '숙소 출발', time: '9:00', detail: '해운대', cost: '0원', notes: '버스 이동', editable: true },
-        { type: '식사', time: '12:00', detail: '금산식당 (10분)', cost: '18,900원', notes: '이동거리: 305m', editable: true },
-        { type: '관광', time: '14:00', detail: '달맞이길 (1시간 30분)', cost: '0원', notes: '산책하기 좋음', editable: true },
+        { type: '숙소 출발', time: '09:00', detail: '해운대 그랜드 호텔', cost: '0원', notes: '지하철 2호선 장산 방면 이용', editable: true },
+        { type: '관광', time: '10:30', detail: '해운대 해변', cost: '0원', notes: '해변 산책로 이용, 인근 휠체어 대여소 확인', editable: true },
+        { type: '식사', time: '12:30', detail: '금산식당 (아구찜)', cost: '45,000원', notes: '이동거리: 305m. 해운대역에서 도보 이동 (접근성 양호)', editable: true },
+        { type: '관광', time: '14:30', detail: '달맞이길 (문탠로드)', cost: '0원', notes: '부산 100번 버스 이용. 휠체어 접근 가능한 전망대 위주', editable: true },
     ],
     'DAY 2': [
-        { type: '관광', time: '10:00', detail: '감천 문화마을', cost: '0원', notes: '언덕 주의', editable: true },
-        { type: '카페', time: '13:00', detail: '마을 내 카페', cost: '15,000원', notes: '뷰가 좋음', editable: true },
+        { type: '관광', time: '10:00', detail: '감천 문화마을', cost: '0원', notes: '토성역 하차 후 감천마을 가는 버스 이용 (마을버스 1-1, 2, 2-2). 언덕 경사 주의', editable: true },
+        { type: '카페', time: '13:00', detail: '마을 내 카페 '아방가르드', cost: '15,000원', notes: '내부 엘리베이터 설치, 뷰 좋음', editable: true },
+        { type: '관광', time: '15:00', detail: '국제시장/깡통시장', cost: '자유', notes: '시장 내 경사가 적은 구역 위주로 이동', editable: true },
     ],
     'DAY 3': [
-        { type: '관광', time: '11:00', detail: '태종대 유람선', cost: '20,000원', notes: '휠체어 선실 문의', editable: true },
+        { type: '관광', time: '11:00', detail: '태종대 유람선', cost: '20,000원', notes: '다누비 순환열차 이용 가능. 유람선 선실 사전 문의', editable: true },
     ],
     'DAY 4': [
-        { type: '식사', time: '18:00', detail: '서면 맛집 탐방', cost: '35,000원', notes: '접근성 좋은 식당 검색', editable: true },
+        { type: '식사', time: '18:00', detail: '서면 '미스터스시' 본점', cost: '35,000원', notes: '엘리베이터 이용 가능, 넓은 테이블 배치', editable: true },
     ],
 };
 
 // ===============================================
-// 서브 컴포넌트: DAY별 경로 오버레이 렌더링
+// 서브 컴포넌트: DAY별 경로 오버레이 렌더링 (수정 없음)
 // ===============================================
 const DayRouteOverlay = ({ selectedDay }) => {
+    // 임의의 마커 위치 배열 (최소 7개 이상)
+    const day1Markers = [
+        { top: '25%', left: '40%', label: 'A' },
+        { top: '35%', left: '48%', label: 'B' },
+        { top: '48%', left: '55%', label: 'C' },
+        { top: '55%', left: '45%', label: 'D' },
+        { top: '65%', left: '38%', label: 'E' },
+        { top: '75%', left: '30%', label: 'F' },
+        { top: '80%', left: '20%', label: 'G' },
+    ];
+    
+    const day2Markers = [
+        { top: '15%', left: '75%', label: 'A' },
+        { top: '30%', left: '70%', label: 'B' },
+        { top: '45%', left: '60%', label: 'C' },
+        { top: '60%', left: '50%', label: 'D' },
+        { top: '75%', left: '40%', label: 'E' },
+        { top: '85%', left: '30%', label: 'F' },
+        { top: '90%', left: '25%', label: 'G' },
+    ];
+
     const getMarkers = () => {
+        let markers = [];
         if (selectedDay === 'DAY 1') {
-            return (
-                <>
-                    {/* DAY 1 경로 커서 시뮬레이션 */}
-                    <div style={{ position: 'absolute', top: '38%', left: '42%', padding: '5px 10px', backgroundColor: 'rgba(0, 0, 0, 0.7)', color: 'white', borderRadius: '5px', fontSize: '0.9em', pointerEvents: 'none', zIndex: 20 }}>
-                        이동 중...
-                    </div>
-                    {/* DAY 1 일반 마커 */}
-                    <div style={{ position: 'absolute', top: '45%', left: '45%', color: 'black', fontSize: '30px', textShadow: '0 0 5px white', zIndex: 20 }}>📍</div>
-                    {/* 충전 가능 영역 (그린 원) */}
-                    <div style={{ position: 'absolute', top: '50%', left: '20%', width: '200px', height: '200px', borderRadius: '50%', backgroundColor: 'rgba(50, 205, 50, 0.3)', border: '2px solid limegreen', zIndex: 19 }}></div>
-                </>
-            );
+            markers = day1Markers;
         } else if (selectedDay === 'DAY 2') {
-            return (
-                <>
-                    {/* DAY 2 경로 커서 시뮬레이션 */}
-                    <div style={{ position: 'absolute', top: '70%', left: '20%', padding: '5px 10px', backgroundColor: 'rgba(100, 0, 100, 0.7)', color: 'white', borderRadius: '5px', fontSize: '0.9em', pointerEvents: 'none', zIndex: 20 }}>
-                        감천마을
-                    </div>
-                    {/* DAY 2 일반 마커 */}
-                    <div style={{ position: 'absolute', top: '75%', left: '30%', color: 'black', fontSize: '30px', textShadow: '0 0 5px white', zIndex: 20 }}>📍</div>
-                </>
-            );
+            markers = day2Markers;
+        } else {
+            return null;
         }
-        return null; 
+
+        return markers.map((marker, index) => (
+            // 일반 마커 (📍) 크기 키움: fontSize: '40px'
+            <div 
+                key={index}
+                style={{ 
+                    position: 'absolute', 
+                    top: marker.top, 
+                    left: marker.left, 
+                    color: '#1B2C4F', // 마커 색상을 로고 색과 비슷하게 조정
+                    fontSize: '40px', // 크기 키움
+                    textShadow: '0 0 5px white', 
+                    zIndex: 20,
+                    transform: 'translate(-50%, -100%)' 
+                }}
+            >
+                📍
+                {/* 마커 위에 작은 숫자 표시 */}
+                <span style={{ 
+                    position: 'absolute', 
+                    top: '50%', 
+                    left: '50%', 
+                    transform: 'translate(-50%, -50%)', 
+                    fontSize: '0.4em', 
+                    color: 'white', 
+                    fontWeight: 'bold' 
+                }}>
+                    {marker.label}
+                </span>
+            </div>
+        ));
     };
 
     return (
@@ -67,22 +103,25 @@ const DayRouteOverlay = ({ selectedDay }) => {
 };
 
 // ===============================================
-// 서브 컴포넌트: 토글되는 고정 마커 렌더링
+// 서브 컴포넌트: 토글되는 고정 마커 렌더링 (수정 없음)
 // ===============================================
 const FixedMarkersOverlay = ({ showChargingStations, showRentalLocations }) => {
+    // 마커 아이콘 크기를 40px로 키움
+    const ICON_SIZE = '40px'; 
+    
     // 충전소 마커 (빨간색 ⚡️) - 고정 위치
     const ChargingMarkers = showChargingStations ? (
         <>
-            <div style={{ position: 'absolute', top: '25%', left: '35%', color: 'red', fontSize: '30px', textShadow: '0 0 5px white', zIndex: 25 }}>⚡️</div>
-            <div style={{ position: 'absolute', top: '60%', left: '55%', color: 'red', fontSize: '30px', textShadow: '0 0 5px white', zIndex: 25 }}>⚡️</div>
+            <div style={{ position: 'absolute', top: '25%', left: '35%', color: '#f44336', fontSize: ICON_SIZE, textShadow: '0 0 5px white', zIndex: 25 }}>🔋</div>
+            <div style={{ position: 'absolute', top: '60%', left: '55%', color: '#f44336', fontSize: ICON_SIZE, textShadow: '0 0 5px white', zIndex: 25 }}>🔋</div>
         </>
     ) : null;
 
     // 대여소 마커 (파란색 ♿) - 고정 위치
     const RentalMarkers = showRentalLocations ? (
         <>
-            <div style={{ position: 'absolute', top: '40%', left: '70%', color: 'blue', fontSize: '30px', textShadow: '0 0 5px white', zIndex: 25 }}>♿</div>
-            <div style={{ position: 'absolute', top: '80%', left: '45%', color: 'blue', fontSize: '30px', textShadow: '0 0 5px white', zIndex: 25 }}>♿</div>
+            <div style={{ position: 'absolute', top: '40%', left: '70%', color: '#2196f3', fontSize: ICON_SIZE, textShadow: '0 0 5px white', zIndex: 25 }}>♿</div>
+            <div style={{ position: 'absolute', top: '80%', left: '45%', color: '#2196f3', fontSize: ICON_SIZE, textShadow: '0 0 5px white', zIndex: 25 }}>♿</div>
         </>
     ) : null;
     
@@ -98,7 +137,7 @@ const FixedMarkersOverlay = ({ showChargingStations, showRentalLocations }) => {
 // ===============================================
 // 메인 컴포넌트: BusanPage
 // ===============================================
-const BusanPage = () => { // 👈 컴포넌트 이름 변경
+const BusanPage = () => { 
     const navigate = useNavigate();
     
     // UI 토글 상태
@@ -108,6 +147,11 @@ const BusanPage = () => { // 👈 컴포넌트 이름 변경
     // 지도 마커 토글 상태
     const [showChargingStations, setShowChargingStations] = useState(false);
     const [showRentalLocations, setShowRentalLocations] = useState(false);
+
+    // ✅ 로고 클릭 핸들러: LoginSuccessPage로 이동
+    const goToLoginSuccess = () => {
+        navigate('/loginsuccess');
+    }
 
     const toggleDay = (day) => {
         setSelectedDay(selectedDay === day ? null : day);
@@ -167,7 +211,10 @@ const BusanPage = () => { // 👈 컴포넌트 이름 변경
             {/* 좌측 일정 사이드바 */}
             <div style={sidebarStyle}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <div 
+                        onClick={goToLoginSuccess} // ✅ 로고 클릭 이벤트 추가
+                        style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+                    >
                          <img src={TraiLogo} alt="TRAI Logo" style={logoStyle} />
                          <span style={{ fontSize: '1.2em', fontWeight: 'bold', color: '#1B2C4F' }}>TRAI</span>
                     </div>
@@ -341,4 +388,4 @@ const BusanPage = () => { // 👈 컴포넌트 이름 변경
     );
 };
 
-export default BusanPage; // 👈 컴포넌트 이름 변경 반영
+export default BusanPage;
