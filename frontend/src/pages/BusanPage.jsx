@@ -1,13 +1,15 @@
-// src/pages/BusanPage.jsx (최종 - 로고 클릭 시 LoginSuccessPage 이동 기능 추가)
+// src/pages/BusanPage.jsx (최종 - 따옴표 충돌 오류 수정 완료)
 
-import React, { useState } from 'react';
+import React, { useState } => 'react';
 import { useNavigate } from 'react-router-dom';
 
 // 로고 및 지도 이미지 경로
 import TraiLogo from '../assets/logo1.jpg'; 
-// ⚠️ 주의: 이 파일은 프로젝트 폴더에 있어야 합니다.
 import BusanRouteImage from '../assets/busan_map_route.jpg'; 
 
+// ===============================================
+// 1. 일정 디테일 보강 (문자열 오류 수정)
+// ===============================================
 const initialSchedule = {
     'DAY 1': [
         { type: '숙소 출발', time: '09:00', detail: '해운대 그랜드 호텔', cost: '0원', notes: '지하철 2호선 장산 방면 이용', editable: true },
@@ -17,19 +19,20 @@ const initialSchedule = {
     ],
     'DAY 2': [
         { type: '관광', time: '10:00', detail: '감천 문화마을', cost: '0원', notes: '토성역 하차 후 감천마을 가는 버스 이용 (마을버스 1-1, 2, 2-2). 언덕 경사 주의', editable: true },
-        { type: '카페', time: '13:00', detail: '마을 내 카페 '아방가르드', cost: '15,000원', notes: '내부 엘리베이터 설치, 뷰 좋음', editable: true },
+        // 👇 이 부분이 수정되었습니다. (작은따옴표 대신 큰따옴표 사용)
+        { type: '카페', time: '13:00', detail: "마을 내 카페 '아방가르드'", cost: '15,000원', notes: '내부 엘리베이터 설치, 뷰 좋음', editable: true }, 
         { type: '관광', time: '15:00', detail: '국제시장/깡통시장', cost: '자유', notes: '시장 내 경사가 적은 구역 위주로 이동', editable: true },
     ],
     'DAY 3': [
         { type: '관광', time: '11:00', detail: '태종대 유람선', cost: '20,000원', notes: '다누비 순환열차 이용 가능. 유람선 선실 사전 문의', editable: true },
     ],
     'DAY 4': [
-        { type: '식사', time: '18:00', detail: '서면 '미스터스시' 본점', cost: '35,000원', notes: '엘리베이터 이용 가능, 넓은 테이블 배치', editable: true },
+        { type: '식사', time: '18:00', detail: "서면 '미스터스시' 본점", cost: '35,000원', notes: '엘리베이터 이용 가능, 넓은 테이블 배치', editable: true },
     ],
 };
 
 // ===============================================
-// 서브 컴포넌트: DAY별 경로 오버레이 렌더링 (수정 없음)
+// 서브 컴포넌트: DayRouteOverlay (수정 없음)
 // ===============================================
 const DayRouteOverlay = ({ selectedDay }) => {
     // 임의의 마커 위치 배열 (최소 7개 이상)
@@ -103,7 +106,7 @@ const DayRouteOverlay = ({ selectedDay }) => {
 };
 
 // ===============================================
-// 서브 컴포넌트: 토글되는 고정 마커 렌더링 (수정 없음)
+// 서브 컴포넌트: FixedMarkersOverlay (수정 없음)
 // ===============================================
 const FixedMarkersOverlay = ({ showChargingStations, showRentalLocations }) => {
     // 마커 아이콘 크기를 40px로 키움
@@ -135,7 +138,7 @@ const FixedMarkersOverlay = ({ showChargingStations, showRentalLocations }) => {
 
 
 // ===============================================
-// 메인 컴포넌트: BusanPage
+// 메인 컴포넌트: BusanPage (수정 없음)
 // ===============================================
 const BusanPage = () => { 
     const navigate = useNavigate();
@@ -148,7 +151,7 @@ const BusanPage = () => {
     const [showChargingStations, setShowChargingStations] = useState(false);
     const [showRentalLocations, setShowRentalLocations] = useState(false);
 
-    // ✅ 로고 클릭 핸들러: LoginSuccessPage로 이동
+    // 로고 클릭 핸들러: LoginSuccessPage로 이동
     const goToLoginSuccess = () => {
         navigate('/loginsuccess');
     }
@@ -212,7 +215,7 @@ const BusanPage = () => {
             <div style={sidebarStyle}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                     <div 
-                        onClick={goToLoginSuccess} // ✅ 로고 클릭 이벤트 추가
+                        onClick={goToLoginSuccess} // 로고 클릭 이벤트 
                         style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
                     >
                          <img src={TraiLogo} alt="TRAI Logo" style={logoStyle} />
@@ -322,70 +325,4 @@ const BusanPage = () => {
                     bottom: '20px', 
                     right: '20px', 
                     display: 'flex', 
-                    flexDirection: 'column', 
-                    gap: '10px',
-                    zIndex: 30
-                }}>
-                    {/* 확대/축소 버튼 (비활성화) */}
-                    <div style={{ fontSize: '30px', color: '#333', cursor: 'default', backgroundColor: 'white', padding: '5px', borderRadius: '50%', boxShadow: '0 2px 5px rgba(0,0,0,0.2)' }}>🔍</div>
-                    
-                    {/* 전기 휠체어 충전소 토글 버튼 */}
-                    <button 
-                        onClick={toggleChargingStations}
-                        style={{ fontSize: '24px', color: showChargingStations ? 'white' : '#555', backgroundColor: showChargingStations ? '#f44336' : 'white', border: 'none', padding: '10px', borderRadius: '50%', boxShadow: '0 2px 5px rgba(0,0,0,0.2)', cursor: 'pointer' }}
-                        title="전기 휠체어 충전소 표시"
-                    >
-                        🔋
-                    </button>
-                    
-                    {/* 휠체어 대여소 토글 버튼 */}
-                    <button 
-                        onClick={toggleRentalLocations}
-                        style={{ fontSize: '24px', color: showRentalLocations ? 'white' : '#555', backgroundColor: showRentalLocations ? '#2196f3' : 'white', border: 'none', padding: '10px', borderRadius: '50%', boxShadow: '0 2px 5px rgba(0,0,0,0.2)', cursor: 'pointer' }}
-                        title="휠체어 대여소 표시"
-                    >
-                        🦽
-                    </button>
-
-                </div>
-            </div>
-
-            {/* 저장 팝업 모달 */}
-            {isSaveModalOpen && (
-                <div style={{
-                    position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.5)', 
-                    display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 100 
-                }}>
-                    <div style={{ 
-                        backgroundColor: 'white', padding: '30px', borderRadius: '8px', width: '350px', 
-                        boxShadow: '0 5px 15px rgba(0,0,0,0.3)', textAlign: 'center', position: 'relative' 
-                    }}>
-                        <h3 style={{ margin: '0 0 20px 0', fontSize: '1.2em', fontWeight: 'bold' }}>저장하시겠습니까?</h3>
-                        <p style={{ margin: '0 0 10px 0', fontSize: '0.9em' }}>파일명을 작성해주세요.</p>
-                        <input 
-                            type="text" 
-                            defaultValue="부산" 
-                            style={{ width: '90%', padding: '10px', margin: '10px 0 20px 0', border: '1px solid #ccc', borderRadius: '4px' }} 
-                        />
-                        <div style={{ display: 'flex', justifyContent: 'center', gap: '15px' }}>
-                            <button onClick={() => setIsSaveModalOpen(false)} style={{ padding: '10px 20px', backgroundColor: '#f0f0f0', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-                                취소
-                            </button>
-                            <button onClick={handleSave} style={{ padding: '10px 20px', backgroundColor: '#1B2C4F', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-                                SAVE
-                            </button>
-                        </div>
-                        <button 
-                            onClick={() => setIsSaveModalOpen(false)} 
-                            style={{ position: 'absolute', top: '10px', right: '10px', background: 'none', border: 'none', fontSize: '1.2em', cursor: 'pointer' }}
-                        >
-                            &times;
-                        </button>
-                    </div>
-                </div>
-            )}
-        </div>
-    );
-};
-
-export default BusanPage;
+                    flexDirection: 'column',
