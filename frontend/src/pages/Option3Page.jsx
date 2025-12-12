@@ -63,17 +63,17 @@ const Option3Page = () => {
                 />
             </div>
 
-            <p style={{ fontSize: '0.9em", color: "#32CD32", fontWeight: "bold", marginBottom: "40px", letterSpacing: "1px" }}>
+            <p style={{ fontSize: '0.9em', color: "#32CD32", fontWeight: "bold", marginBottom: "40px", letterSpacing: "1px" }}>
                 AI-PLANNED, PERSONALIZED ADVENTURES
             </p>
             
-            <h2 style={{ fontSize: '2em", fontWeight: "bold", margin: "0 0 50px 0", color: "black" }}>
+            <h2 style={{ fontSize: '2em', fontWeight: "bold", margin: "0 0 50px 0", color: "black" }}>
                 Q. 원하는 날짜를 선택해주세요.
             </h2>
 
             <div style={datePickerContainerStyle}>
                 <div>
-                    <h3 style={{ marginBottom: '15px", color: "black", fontWeight: "bold", fontSize: "1.2em", textAlign: "left" }}>
+                    <h3 style={{ marginBottom: '15px', color: "black", fontWeight: "bold", fontSize: "1.2em", textAlign: "left" }}>
                         📅 가는 날 (체크인)
                     </h3>
                     <DatePicker 
@@ -89,7 +89,7 @@ const Option3Page = () => {
                 </div>
                 
                 <div>
-                    <h3 style={{ marginBottom: '15px", color: "black", fontWeight: "bold", fontSize: "1.2em", textAlign: "left" }}>
+                    <h3 style={{ marginBottom: '15px', color: "black", fontWeight: "bold", fontSize: "1.2em", textAlign: "left" }}>
                         🗓️ 오는 날 (체크아웃)
                     </h3>
                     <DatePicker 
