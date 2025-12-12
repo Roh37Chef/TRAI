@@ -1,8 +1,7 @@
-// src/App.jsx (최종 - 지도 Import 잔재 완벽 제거)
+// src/App.jsx (최종 - MainPage를 첫 화면으로 설정)
 
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-// ⚠️ 여기에 react-naver-maps 관련 Import가 없음을 확인해 주세요!
 
 // =================================================================
 // 1. 모든 페이지 Import 
@@ -33,7 +32,7 @@ import MyPlanPage from './pages/MyPlanPage';
 import MyReviewPage from './pages/MyReviewPage';            
 import GangneungReviewPage from './pages/GangneungReviewPage'; 
 import JungwhaDetailPage from './pages/JungwhaDetailPage';      
-
+// import HomePage from './pages/HomePage'; // ⚠️ HomePage는 사용하지 않으므로 Import 제외
 
 // =================================================================
 // 2. App 컴포넌트 및 라우팅 설정
@@ -43,13 +42,17 @@ function App() {
     return (
         <Router>
             <Routes>
-                {/* 메인 및 로그인/회원가입 */}
+                {/* ✅ MainPage를 기본 루트 경로 ("/")로 설정합니다. 
+                /main 경로도 MainPage로 연결합니다.
+                */}
                 <Route path="/" element={<MainPage />} />
+                <Route path="/main" element={<MainPage />} />
+                
+                {/* 로그인 및 회원가입 */}
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<SignUpPage />} />
-                <Route path="/main" element={<MainPage />} />
                 <Route path="/loginsuccess" element={<LoginSuccessPage />} />
-
+                
                 {/* 일정 생성 Option 경로 (핵심) */}
                 <Route path="/option1" element={<Option1Page />} />
                 <Route path="/option2" element={<Option2Page />} />
@@ -73,7 +76,8 @@ function App() {
                 <Route path="/gangneungreview" element={<GangneungReviewPage />} />
                 <Route path="/jungwha-detail" element={<JungwhaDetailPage />} /> 
                 <Route path="/review/:city" element={<div style={{padding:'50px'}}>도시 상세 후기 페이지 (파라미터 사용)</div>} />
-
+                
+                {/* ⚠️ HomePage 라우트는 제거되었습니다. */}
             </Routes>
         </Router>
     );
