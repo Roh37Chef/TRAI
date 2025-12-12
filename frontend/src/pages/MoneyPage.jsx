@@ -25,7 +25,6 @@ const styles = {
         padding: '0 20px',
         display: 'flex',
         gap: '30px',
-        // 헤더 높이 100px 복구 가정
         minHeight: 'calc(100vh - 100px)', 
     },
     leftPanel: {
@@ -47,7 +46,7 @@ const styles = {
         width: '100%',
         borderCollapse: 'collapse',
         marginTop: '20px',
-        border: '1px solid #1B2C4F' // 테이블 외곽선 추가 (디자인 강조)
+        border: '1px solid #1B2C4F' 
     },
     th: {
         backgroundColor: '#1B2C4F',
@@ -74,7 +73,6 @@ const styles = {
         marginBottom: '10px',
         textAlign: 'right', 
     },
-    // 👇 항목 버튼 3x2 그리드 스타일 (요청 반영) 👇
     categoryGrid: {
         display: 'grid',
         gridTemplateColumns: 'repeat(3, 1fr)',
@@ -95,7 +93,6 @@ const styles = {
         height: '70px',
         transition: 'background-color 0.2s',
     },
-    // 캘린더 컨테이너 스타일
     calendarContainer: {
         display: 'inline-block', 
         border: '1px solid #ddd', 
