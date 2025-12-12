@@ -10,7 +10,7 @@ const LoadingPage = () => {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            navigate('/busan1'); 
+            navigate('/Busan'); 
         }, 3000); 
 
         return () => clearTimeout(timer);
