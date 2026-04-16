@@ -1,4 +1,4 @@
-// src/pages/DisabledPersonPage.jsx (최종 디자인 반영)
+// src/pages/DisabledPersonPage.jsx (최종 디자인 반영 - 무의 항목 추가 및 URL 업데이트)
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -87,7 +87,8 @@ const getLogo = (name) => {
     switch(name) {
         case '열린관광': return <span style={{ ...styles.logo, fontSize: '2em', color: '#ff6600' }}>☀</span>;
         case '공감여행': return <span style={{ ...styles.logo, fontSize: '2em', color: '#008000' }}>🌳</span>;
-        case '경기여행누림': return <span style={{ ...styles.logo, fontSize: '2em', color: '#0000ff' }}>♿</span>;
+        case '경기여행누림': return <span style={{ ...styles.logo, fontSize: '2em', color: '#0000ff' }}>♿</span>; // 휠체어 아이콘 1
+        case '무의': return <span style={{ ...styles.logo, fontSize: '2em', color: '#8A2BE2' }}>🦽</span>; // 휠체어 아이콘 2
         default: return null;
     }
 };
@@ -99,17 +100,22 @@ function DisabledPersonPage() {
         {
             name: '열린관광',
             detail: '관광지(숙소, 음식점)별 편의 시설 안내',
-            link: 'https://kto.visitkorea.or.kr/kor/info/accessibility/main.kto'
+            link: 'https://access.visitkorea.or.kr/main/main.do' // ✅ URL 업데이트
         },
         {
             name: '공감여행',
             detail: '인천시 여행 차량 지원 프로그램',
-            link: 'https://www.incheon.go.kr/traffic/ITX020202'
+            link: 'http://www.공감여행.com' // ✅ URL 업데이트
         },
         {
             name: '경기여행누림',
             detail: '경기도 내 여행지 이동 지원 서비스',
-            link: 'https://www.ggnurim.or.kr/'
+            link: 'http://www.ggnurim.or.kr/cop' // ✅ URL 업데이트
+        },
+        { // ✅ 네 번째 항목 추가
+            name: '무의',
+            detail: '휠체어가 다니기 좋은 곳은 모든 사람이 다니기 좋은 곳',
+            link: 'https://www.wearemuui.com/' // ✅ URL 업데이트
         }
     ];
 

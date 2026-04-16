@@ -1,129 +1,83 @@
-// src/pages/Option3Page.jsx (최종 - 문법 오류 수정 완료)
+// src/App.jsx (최종 - MainPage를 첫 화면으로 설정 및 클린 상태)
 
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import DatePicker from 'react-datepicker'; 
-import 'react-datepicker/dist/react-datepicker.css'; 
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
-import LargeLogo from '../assets/logo1.jpg'; 
+// =================================================================
+// 1. 모든 페이지 Import 
+// =================================================================
+import MainPage from './pages/MainPage';
+import LoginPage from './pages/LoginPage';
+import SignUpPage from './pages/SignUpPage';
+import LoginSuccessPage from './pages/LoginSuccessPage';
 
-const datePickerContainerStyle = {
-    display: 'flex', 
-    justifyContent: 'center', 
-    gap: '50px', 
-    maxWidth: '1000px', 
-    margin: '0 auto',
-};
+// 옵션 선택 경로
+import Option1Page from './pages/Option1Page';
+import Option2Page from './pages/Option2Page';
+import Option3Page from './pages/Option3Page';
+import Option4Page from './pages/Option4Page';
+import Option6Page from './pages/Option6Page'; 
 
-const inputStyle = {
-    padding: '10px',
-    border: '1px solid #1B2C4F', 
-    borderRadius: '4px',
-    boxSizing: 'border-box',
-    fontSize: '1em',
-    textAlign: 'left', 
-    cursor: 'pointer',
-    width: '220px', 
-    marginTop: '10px',
-    height: '45px', 
-    paddingLeft: '15px'
-};
+// 부산 페이지 추가
+import BusanPage from './pages/BusanPage';
 
-const Option3Page = () => {
-    const navigate = useNavigate();
-    const [goingDate, setGoingDate] = useState(null); 
-    const [comingDate, setComingDate] = useState(null); 
+// 기타 페이지
+import LoadingPage from './pages/LoadingPage';
+import WelfarePage from './pages/WelfarePage'; 
+import MoneyPage from './pages/MoneyPage';              
+import ReviewPage from './pages/ReviewPage';            
+import DisabledPersonPage from './pages/DisabledPersonPage'; 
+import TicketPage from './pages/TicketPage';            
+import MyPlanPage from './pages/MyPlanPage';            
+import MyReviewPage from './pages/MyReviewPage';            
+import GangneungReviewPage from './pages/GangneungReviewPage'; 
+import JungwhaDetailPage from './pages/JungwhaDetailPage';      
 
-    const handleNext = () => {
-        if (!goingDate || !comingDate) {
-            alert("가는 날과 오는 날을 모두 선택해주세요.");
-            return;
-        }
-        if (goingDate >= comingDate) {
-            alert("오는 날은 가는 날보다 늦어야 합니다.");
-            return;
-        }
-        
-        navigate('/option6', { 
-            state: { 
-                goingDate: goingDate.toISOString().split('T')[0], 
-                comingDate: comingDate.toISOString().split('T')[0]
-            } 
-        });
-    };
 
+// =================================================================
+// 2. App 컴포넌트 및 라우팅 설정
+// =================================================================
+
+function App() {
     return (
-        <div style={{ textAlign: 'center', paddingTop: '80px' }}>
-             {/* 로고 영역 */}
-             <div style={{ marginBottom: '20px' }}>
-                <img 
-                    src={LargeLogo} 
-                    alt="TRAI Logo" 
-                    style={{ height: '40px', display: 'block', margin: '0 auto' }} 
-                />
-            </div>
-
-            <p style={{ fontSize: '0.9em', color: '#32CD32', fontWeight: 'bold', marginBottom: '40px', letterSpacing: '1px' }}>
-                AI-PLANNED, PERSONALIZED ADVENTURES
-            </p>
-            
-            <h2 style={{ fontSize: '2em', fontWeight: 'bold', margin: '0 0 50px 0', color: 'black' }}>
-                Q. 원하는 날짜를 선택해주세요.
-            </h2>
-
-            <div style={datePickerContainerStyle}>
-                <div>
-                    <h3 style={{ marginBottom: '15px', color: 'black', fontWeight: 'bold', fontSize: '1.2em', textAlign: 'left' }}>
-                        📅 가는 날 (체크인)
-                    </h3>
-                    <DatePicker 
-                        selected={goingDate}
-                        onChange={(date) => setGoingDate(date)}
-                        selectsStart
-                        startDate={goingDate}
-                        endDate={comingDate}
-                        minDate={new Date()}
-                        placeholderText="가는 날짜 선택"
-                        customInput={<input style={inputStyle} />}
-                    />
-                </div>
+        <Router>
+            <Routes>
+                {/* ✅ MainPage를 기본 루트 경로 ("/")로 설정합니다. */}
+                <Route path="/" element={<MainPage />} />
+                <Route path="/main" element={<MainPage />} />
                 
-                <div>
-                    <h3 style={{ marginBottom: '15px', color: 'black', fontWeight: 'bold', fontSize: '1.2em', textAlign: 'left' }}>
-                        🗓️ 오는 날 (체크아웃)
-                    </h3>
-                    <DatePicker 
-                        selected={comingDate}
-                        onChange={(date) => setComingDate(date)}
-                        selectsEnd
-                        startDate={goingDate}
-                        endDate={comingDate}
-                        minDate={goingDate || new Date()} 
-                        placeholderText="오는 날짜 선택"
-                        customInput={<input style={{...inputStyle, backgroundColor: '#f9f9f9', border: '1px solid #ccc'}} />}
-                        disabled={!goingDate} 
-                    />
-                </div>
-            </div>
+                {/* 로그인 및 회원가입 */}
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/signup" element={<SignUpPage />} />
+                <Route path="/loginsuccess" element={<LoginSuccessPage />} />
+                
+                {/* 일정 생성 Option 경로 (핵심) */}
+                <Route path="/option1" element={<Option1Page />} />
+                <Route path="/option2" element={<Option2Page />} />
+                <Route path="/option3" element={<Option3Page />} />
+                <Route path="/option4" element={<Option4Page />} />
+                <Route path="/option6" element={<Option6Page />} />
 
-            <button
-                onClick={handleNext}
-                style={{
-                    marginTop: '60px',
-                    padding: '15px 50px',
-                    backgroundColor: '#1B2C4F',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '5px',
-                    cursor: 'pointer',
-                    fontSize: '1.1em',
-                    fontWeight: 'bold'
-                }}
-            >
-                다음
-            </button>
-        </div>
+                {/* 부산 페이지 라우트 (BusanPage를 /busanpage 및 /Busan 모두 허용) */}
+                <Route path="/busanpage" element={<BusanPage />} />
+                <Route path="/Busan" element={<BusanPage />} /> 
+
+                {/* 나머지 페이지 라우트 */}
+                <Route path="/loading" element={<LoadingPage />} />
+                <Route path="/welfare" element={<WelfarePage />} />
+                <Route path="/moneypage" element={<MoneyPage />} />
+                <Route path="/reviewpage" element={<ReviewPage />} />
+                <Route path="/disabledpersonpage" element={<DisabledPersonPage />} />
+                <Route path="/ticketpage" element={<TicketPage />} /> 
+                <Route path="/myplanpage" element={<MyPlanPage />} />
+                <Route path="/myreviewpage" element={<MyReviewPage />} />
+                <Route path="/gangneungreview" element={<GangneungReviewPage />} />
+                <Route path="/jungwha-detail" element={<JungwhaDetailPage />} /> 
+                <Route path="/review/:city" element={<div style={{padding:'50px'}}>도시 상세 후기 페이지 (파라미터 사용)</div>} />
+                
+            </Routes>
+        </Router>
     );
-};
+}
 
-export default Option3Page;
+export default App;
