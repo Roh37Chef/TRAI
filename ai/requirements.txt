@@ -5,4 +5,5 @@ langchain-classic
 langchain-community
 langchain-openai
 fastapi
+python-dotenv
 uvicorn
