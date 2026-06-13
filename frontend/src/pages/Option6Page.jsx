@@ -8,11 +8,16 @@ const Option6Page = () => {
     const navigate = useNavigate();
     const location = useLocation(); 
     
+    // 💡 변경점 1: 메인 페이지 등에서 넘겨준 URL이 있다면 기본값으로 가져옵니다.
+    const initialUrl = location.state?.url || '';
+
+    // 💡 변경점 2: 상태(state)에 blogUrl 칸을 추가했습니다.
     const [inputs, setInputs] = useState({
         destination: '',
         accommodationTime: '',
         departureTime: '',
-        accommodationPreference: ''
+        accommodationPreference: '',
+        blogUrl: initialUrl 
     });
 
     const handleChange = (e) => {
@@ -23,7 +28,14 @@ const Option6Page = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         
-        navigate('/loading'); 
+        // 💡 변경점 3: Submit 버튼을 누를 때, 이전 페이지들의 데이터와 
+        // 현재 페이지에서 입력한 데이터(블로그 URL 포함)를 모두 합쳐서 로딩 페이지로 보냅니다.
+        navigate('/loading', { 
+            state: { 
+                ...location.state, 
+                ...inputs 
+            } 
+        }); 
     };
 
     const inputStyle = {
@@ -103,6 +115,18 @@ const Option6Page = () => {
                         onChange={handleChange}
                         style={inputStyle}
                         required
+                    />
+
+                    {/* 💡 추가된 부분: 블로그 URL 입력 (선택) */}
+                    <label style={{ display: 'block', textAlign: 'left', fontWeight: 'bold', marginTop: '10px' }}>블로그 URL (선택)</label>
+                    <input
+                        type="text"
+                        name="blogUrl"
+                        placeholder="예: https://blog.naver.com/... (선택 사항)"
+                        value={inputs.blogUrl}
+                        onChange={handleChange}
+                        style={inputStyle}
+                        // 선택 사항이므로 required 속성은 넣지 않습니다.
                     />
 
                     <button
