@@ -1,5 +1,9 @@
 openai>=1.0.0
-chromadb
+chromadb==0.5.3
 langchain
+langchain-classic
+langchain-community
+langchain-openai
 fastapi
+python-dotenv
 uvicorn
